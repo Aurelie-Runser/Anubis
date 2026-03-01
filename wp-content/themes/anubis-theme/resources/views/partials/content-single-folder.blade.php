@@ -18,15 +18,6 @@ $meta = [
 $linked_is = get_post_meta($post_id, '_linked_is', true);
 $linked_is = is_array($linked_is) ? $linked_is : [];
 
-if(!empty($linked_is)) {
-    $is_query = new WP_Query([
-        'post_type' => 'is',
-        'post__in'  => $linked_is,
-        'orderby'   => 'post__in',
-        'posts_per_page' => -1,
-    ]);
-}
-
 @endphp
 
 <a class="content-single-return" href="{{ get_post_type_archive_link( get_post_type() ) }}">Retourner à la liste des {!! get_post_type_object( get_post_type() )->label !!}</a>
@@ -57,22 +48,19 @@ if(!empty($linked_is)) {
 
             <h2>I.S. Liés&nbsp;:</h2>
 
-            @if( !empty($is_query) && $is_query->have_posts())
+            @if(!empty($linked_is))
                 <ul class="linked-is-list">
-                    @while($is_query->have_posts()) @php($is_query->the_post())
+                    @foreach($linked_is as $is_id)
                         <li>
-                            <a href="{{ get_permalink() }}">
-                                {!! get_the_title() !!}
+                            <a href="{{ get_permalink($is_id) }}">
+                                {!! get_the_title($is_id) !!}
                             </a>
                         </li>
-                    @endwhile
+                    @endforeach
                 </ul>
-
-                @php(wp_reset_postdata())
-
             @else
                 <x-alert type="default">
-                    Aucun {!! get_post_type_object( "is" )->label !!} associé à ce {!! get_post_type_object( get_post_type() )->labels->singular_name !!}.
+                    Aucun {!! get_post_type_object( "is" )->labels->singular_name !!} associé à ce {!! get_post_type_object( get_post_type() )->labels->singular_name !!}.
                 </x-alert>
             @endif
 

@@ -211,11 +211,55 @@ function save_metabox_folder($post_id) {
         update_post_meta($post_id, '_description', sanitize_textarea_field($_POST['description']));
     }
 
+    // Sauvegarde relation bidirectionnelle IS <-> Folder
     if (isset($_POST['linked_is']) && is_array($_POST['linked_is'])) {
-        $linked = array_map('intval', $_POST['linked_is']);
-        update_post_meta($post_id, '_linked_is', $linked);
+
+        $new_linked_is = array_map('intval', $_POST['linked_is']);
+
+    } else {
+        $new_linked_is = [];
+    }
+
+    // Anciennes relations
+    $old_linked_is = get_post_meta($post_id, '_linked_is', true);
+    $old_linked_is = is_array($old_linked_is) ? $old_linked_is : [];
+
+    // 1️⃣ Mettre à jour le côté folder
+    if (!empty($new_linked_is)) {
+        update_post_meta($post_id, '_linked_is', $new_linked_is);
     } else {
         delete_post_meta($post_id, '_linked_is');
+    }
+
+    // 2️⃣ Supprimer le folder des anciens IS non conservés
+    $removed_is = array_diff($old_linked_is, $new_linked_is);
+
+    foreach ($removed_is as $is_id) {
+
+        $folders = get_post_meta($is_id, '_linked_folders', true);
+        $folders = is_array($folders) ? $folders : [];
+
+        $folders = array_diff($folders, [$post_id]);
+
+        if (!empty($folders)) {
+            update_post_meta($is_id, '_linked_folders', $folders);
+        } else {
+            delete_post_meta($is_id, '_linked_folders');
+        }
+    }
+
+    // 3️⃣ Ajouter le folder aux nouveaux IS
+    $added_is = array_diff($new_linked_is, $old_linked_is);
+
+    foreach ($added_is as $is_id) {
+
+        $folders = get_post_meta($is_id, '_linked_folders', true);
+        $folders = is_array($folders) ? $folders : [];
+
+        if (!in_array($post_id, $folders)) {
+            $folders[] = $post_id;
+            update_post_meta($is_id, '_linked_folders', $folders);
+        }
     }
 
 }

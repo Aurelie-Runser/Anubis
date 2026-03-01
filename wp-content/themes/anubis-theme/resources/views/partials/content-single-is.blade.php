@@ -25,9 +25,12 @@ $categories = get_the_terms($post_id, 'is_category');
 // Capacités
 $capacities_items = $meta['capacities'] ? array_map('trim', explode("\n", $meta['capacities'])) : [];
 
+// Dossiers
+$linked_folders = get_post_meta($post_id, '_linked_folders', true);
+$linked_folders = is_array($linked_folders) ? $linked_folders : [];
 @endphp
 
-<a class="content-single-return" href="{{ get_post_type_archive_link( get_post_type() ) }}">Retourner à la liste des I.S.</a>
+<a class="content-single-return" href="{{ get_post_type_archive_link( get_post_type() ) }}">Retourner à la liste des {!! get_post_type_object( get_post_type() )->label !!}</a>
 
 <article @php(post_class('h-entry'))>
     <div class="e-content">
@@ -82,9 +85,21 @@ $capacities_items = $meta['capacities'] ? array_map('trim', explode("\n", $meta[
             @endif
 
             <h2>Dossiers Liés :</h2>
-            <x-alert type="default">
-                En cours de dev. Ca arrive bientôt ;)
-            </x-alert>
+            @if(!empty($linked_folders))
+                <ul class="linked-folders-list">
+                    @foreach($linked_folders as $folder_id)
+                        <li>
+                            <a href="{{ get_permalink($folder_id) }}">
+                                {!! get_the_title($folder_id) !!}
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            @else
+                <x-alert type="default">
+                    Aucun {!! get_post_type_object( "folder" )->labels->singular_name !!} associé à cet {!! get_post_type_object( get_post_type() )->labels->singular_name !!} .
+                </x-alert>
+            @endif
 
             <h2>Historique</h2>
             <x-alert type="default">
