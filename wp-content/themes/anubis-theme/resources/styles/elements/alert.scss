@@ -1,0 +1,18 @@
+.alert{
+    padding: var(--wp--preset--spacing--xs);
+    background: var(--wp--preset--color--primary);
+    font-weight: 400;
+    color: white;
+    
+    &.alert-restricted {
+        background: var(--wp--preset--color--restricted);
+    }
+    
+    &.alert-good {
+        background: var(--wp--preset--color--good);
+    }
+    
+    &.alert-warning {
+        background: var(--wp--preset--color--warning);
+    }
+}

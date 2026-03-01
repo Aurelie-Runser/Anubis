@@ -1,0 +1,26 @@
+// h1, h2, h3, h4, h5, h6 {
+// 	word-break: auto-phrase;    // retour à la ligne automatique pour les mots trops longs
+//     hyphens: auto;
+// }
+
+// p, span, a, li {
+//     word-break: auto-phrase;    // retour à la ligne automatique pour les mots trops longs
+//     hyphens: auto;
+// }
+
+p{
+    margin-bottom: var(--wp--preset--spacing--sm);
+}
+
+span, strong {
+    color: inherit;
+}
+
+.content-single-return{
+    display: block;
+    margin-bottom: var(--wp--preset--spacing--md);
+
+    &::before {
+        content: "< ";
+    }
+}

@@ -1,0 +1,215 @@
+<?php
+
+function cpt__folder() {
+
+	$labels = array(
+		'name'                => _x( 'Dossiers', 'Post Type General Name'),
+		'singular_name'       => _x( 'Dossier', 'Post Type Singular Name'),
+		'menu_name'           => __( 'Dossier'),
+		'all_items'           => __( 'Tous les Dossiers'),
+		'view_item'           => __( 'Voir les Dossiers'),
+		'add_new_item'        => __( 'Ajouter un nouveau Dossier'),
+		'add_new'             => __( 'Ajouter'),
+		'edit_item'           => __( 'Editer le Dossier'),
+		'update_item'         => __( 'Modifier le Dossier'),
+		'search_items'        => __( 'Rechercher un Dossier'),
+		'not_found'           => __( 'Non trouvé'),
+		'not_found_in_trash'  => __( 'Non trouvé dans la corbeille'),
+        'view_items'          => __( 'Voir la liste des Dossier'),
+    );
+		
+	$args = array(
+        'label'               => __( 'Dossier'),
+		'description'         => __( 'Tous sur Dossier'),
+		'labels'              => $labels,
+		'supports'            => array( 'title'),
+		'show_in_rest'        => true,
+		'hierarchical'        => false,
+		'public'              => true,
+		'has_archive'         => true,
+		'rewrite'			  => array( 'slug' => 'dossiers'),
+        'menu_icon'           => 'dashicons-category',
+        'capability_type'     => 'folder',
+        'map_meta_cap'        => true,
+	);
+	
+	register_post_type( 'folder', $args );
+}
+add_action( 'init', 'cpt__folder', 0 );
+
+function taxonomy__folder() {
+
+    $labels = array(
+        'name'              => 'Années Ouverts',
+        'singular_name'     => 'Année Ouvert',
+        'search_items'      => 'Rechercher une Année',
+        'all_items'         => 'Toutes les Années',
+        'edit_item'         => 'Éditer l\Année',
+        'update_item'       => 'Mettre à jour',
+        'add_new_item'      => 'Ajouter une Année',
+        'new_item_name'     => 'Nouvelle Année',
+        'menu_name'         => 'Années Ouvert',
+    );
+
+    register_taxonomy('folder_category', ['folder'], array(
+        'hierarchical'      => true,
+        'labels'            => $labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'show_in_rest'      => true,
+        'rewrite' => array(
+            'slug' => 'dossiers-annee', // <-- base complète pour URL
+            'with_front' => false,
+            'hierarchical' => true, // permet les sous-termes
+        ),
+    ));
+}
+add_action('init', 'taxonomy__folder');
+
+
+/**
+ * Metabox complète pour le CPT "Dossier"
+ */
+
+function add_metabox_folder() {
+    add_meta_box('folder_meta', 'Informations sur Dossier.', 'show_metabox_folder', 'folder');
+}
+add_action('add_meta_boxes', 'add_metabox_folder');
+
+function show_metabox_folder($post) {
+
+    // Récupération des metas
+    $roles_allowed = get_post_meta($post->ID, '_roles_allowed', true);
+    $roles_allowed = is_array($roles_allowed) ? $roles_allowed : [];
+
+    $date_opening = get_post_meta($post->ID, '_date_opening', true);
+    $date_closing    = get_post_meta($post->ID, '_date_closing', true);
+    $date_last_update    = get_post_meta($post->ID, '_date_last_update', true);
+    $description   = get_post_meta($post->ID, '_description', true);
+
+    wp_nonce_field('save_folder_metabox', 'folder_metabox_nonce');
+    ?>
+
+    <p>
+        <strong>Rôles autorisés à consulter</strong><br>
+
+        <?php foreach (ROLES_PASSIVE as $role): ?>
+            <label style="display:block;">
+                <input
+                    type="checkbox"
+                    name="roles_allowed[]"
+                    value="<?php echo esc_attr($role); ?>"
+                    <?php checked(in_array($role, $roles_allowed)); ?>
+                >
+                <?php echo esc_html(ucfirst($role)); ?>
+            </label>
+        <?php endforeach; ?>
+    </p>
+
+    <p>
+        <label for="date_opening"><strong>Date d'ouverture</strong></label><br>
+        <input
+            type="date"
+            id="date_opening"
+            name="date_opening"
+            value="<?php echo esc_attr($date_opening); ?>"
+        >
+    </p>
+
+    <p>
+        <label for="date_closing"><strong>Date de fermeture</strong></label><br>
+        <input
+            type="date"
+            id="date_closing"
+            name="date_closing"
+            value="<?php echo esc_attr($date_closing); ?>"
+        >
+    </p>
+
+    <p>
+        <label for="date_last_update"><strong>Date de la dernière modification</strong></label><br>
+        <input
+            type="date"
+            id="date_last_update"
+            name="date_last_update"
+            value="<?php echo esc_attr($date_last_update); ?>"
+        >
+    </p>
+
+    <p>
+        <label for="description"><strong>Description</strong></label><br>
+        <textarea
+            name="description"
+            id="description"
+            style="width:100%; height:200px"
+        ><?php echo esc_textarea($description); ?></textarea>
+    </p>
+
+    <?php
+}
+
+
+function save_metabox_folder($post_id) {
+
+    // Sécurité
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!isset($_POST['folder_metabox_nonce']) ||
+        !wp_verify_nonce($_POST['folder_metabox_nonce'], 'save_folder_metabox')) {
+        return;
+    }
+
+    if (!current_user_can('edit_post', $post_id)) return;
+    if (get_post_type($post_id) !== 'folder') return;
+
+    if (isset($_POST['roles_allowed']) && is_array($_POST['roles_allowed'])) {
+        $roles = array_map('sanitize_text_field', $_POST['roles_allowed']);
+        update_post_meta($post_id, '_roles_allowed', $roles);
+    } else {
+        delete_post_meta($post_id, '_roles_allowed');
+    }
+
+    if (isset($_POST['date_opening'])) {
+        update_post_meta($post_id, '_date_opening', sanitize_text_field($_POST['date_opening']));
+    }
+
+    if (isset($_POST['date_closing'])) {
+        update_post_meta($post_id, '_date_closing', sanitize_text_field($_POST['date_closing']));
+    }
+
+    if (isset($_POST['date_last_update'])) {
+        update_post_meta($post_id, '_date_last_update', sanitize_text_field($_POST['date_last_update']));
+    }
+
+    if (isset($_POST['description'])) {
+        update_post_meta($post_id, '_description', sanitize_textarea_field($_POST['description']));
+    }
+
+}
+add_action('save_post_folder', 'save_metabox_folder');
+
+
+// function add_folder_caps() {
+//     $role = get_role('administrator');
+//     // $role = get_role('editor');
+
+//     $caps = [
+//         'edit_folder',
+//         'read_folder',
+//         'delete_folder',
+//         'edit_folders',
+//         'edit_others_folders',
+//         'publish_folders',
+//         'read_private_folders',
+//         'delete_folders',
+//         'delete_private_folders',
+//         'delete_published_folders',
+//         'delete_others_folders',
+//         'edit_private_folders',
+//         'edit_published_folders',
+//     ];
+
+//     foreach ($caps as $cap) {
+//         $role->add_cap($cap);
+//     }
+// }
+// add_action('admin_init', 'add_folder_caps');

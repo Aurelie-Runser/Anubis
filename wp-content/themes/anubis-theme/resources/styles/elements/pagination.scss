@@ -1,0 +1,36 @@
+.custom-pagination{
+    margin-top: var(--wp--preset--spacing--md);
+
+    ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: var(--wp--preset--spacing--sm);
+
+        li {
+            list-style: none;
+            font-size: var(--wp--preset--font-size--lg);
+
+            &.active a {
+                color: var(--wp--preset--color--black);
+                pointer-events: none;
+            }
+
+            a {
+                svg{
+                    display: block;
+                    width: 32px;
+                    height: 32px;
+
+                    * {
+                        fill: currentColor
+                    }
+                }
+            }
+            
+            &.arrow.prev {
+                scale: -1;
+            }
+        }
+    }
+}

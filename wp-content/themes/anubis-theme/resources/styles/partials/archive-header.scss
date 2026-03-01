@@ -1,0 +1,32 @@
+.archive_header {
+
+    .archive_filter_table {
+        list-style: none;
+        border-bottom: 1px solid var(--wp--preset--color--black);
+        padding-inline: var(--wp--preset--spacing--sm);
+        display: flex;
+        column-gap: var(--wp--preset--spacing--md);
+
+        a {
+            display: block;
+            padding: var(--wp--preset--spacing--sm) var(--wp--preset--spacing--md);
+            border: 1px solid var(--wp--preset--color--black);
+            border-bottom: none;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            font-size: var(--wp--preset--font-size--xl);
+            color: var(--wp--preset--color--black);
+
+            &:hover {
+                background: var(--wp--preset--color--primary);
+                color: var(--wp--preset--color--white);
+                text-decoration: none;
+            }
+            
+            &.is-active {
+                background: var(--wp--preset--color--black) !important;
+                color: var(--wp--preset--color--white) !important;
+            }
+        }
+    }
+}
