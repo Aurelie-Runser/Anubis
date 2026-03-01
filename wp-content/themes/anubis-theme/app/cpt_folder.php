@@ -5,7 +5,7 @@ function cpt__folder() {
 	$labels = array(
 		'name'                => _x( 'Dossiers', 'Post Type General Name'),
 		'singular_name'       => _x( 'Dossier', 'Post Type Singular Name'),
-		'menu_name'           => __( 'Dossier'),
+		'menu_name'           => __( 'Dossiers'),
 		'all_items'           => __( 'Tous les Dossiers'),
 		'view_item'           => __( 'Voir les Dossiers'),
 		'add_new_item'        => __( 'Ajouter un nouveau Dossier'),
@@ -44,7 +44,7 @@ function taxonomy__folder() {
         'singular_name'     => 'Année Ouvert',
         'search_items'      => 'Rechercher une Année',
         'all_items'         => 'Toutes les Années',
-        'edit_item'         => 'Éditer l\Année',
+        'edit_item'         => 'Éditer l\'Année',
         'update_item'       => 'Mettre à jour',
         'add_new_item'      => 'Ajouter une Année',
         'new_item_name'     => 'Nouvelle Année',
@@ -86,6 +86,15 @@ function show_metabox_folder($post) {
     $date_closing    = get_post_meta($post->ID, '_date_closing', true);
     $date_last_update    = get_post_meta($post->ID, '_date_last_update', true);
     $description   = get_post_meta($post->ID, '_description', true);
+
+    $linked_is = get_post_meta($post->ID, '_linked_is', true);
+    $linked_is = is_array($linked_is) ? $linked_is : [];
+    $is_posts = get_posts([
+        'post_type' => 'is',
+        'numberposts' => -1,
+        'orderby' => 'title',
+        'order' => 'ASC',
+    ]);
 
     wp_nonce_field('save_folder_metabox', 'folder_metabox_nonce');
     ?>
@@ -145,6 +154,24 @@ function show_metabox_folder($post) {
         ><?php echo esc_textarea($description); ?></textarea>
     </p>
 
+    <p>
+        <strong>I.S. associés à ce dossier</strong>
+    </p>
+
+    <div style="max-height:200px; overflow:auto; border:1px solid #ddd; padding:10px; display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+        <?php foreach ($is_posts as $is): ?>
+            <label style="display:block;">
+                <input
+                    type="checkbox"
+                    name="linked_is[]"
+                    value="<?php echo esc_attr($is->ID); ?>"
+                    <?php checked(in_array($is->ID, $linked_is)); ?>
+                >
+                <?php echo esc_html($is->post_title); ?>
+            </label>
+        <?php endforeach; ?>
+    </div>
+
     <?php
 }
 
@@ -182,6 +209,13 @@ function save_metabox_folder($post_id) {
 
     if (isset($_POST['description'])) {
         update_post_meta($post_id, '_description', sanitize_textarea_field($_POST['description']));
+    }
+
+    if (isset($_POST['linked_is']) && is_array($_POST['linked_is'])) {
+        $linked = array_map('intval', $_POST['linked_is']);
+        update_post_meta($post_id, '_linked_is', $linked);
+    } else {
+        delete_post_meta($post_id, '_linked_is');
     }
 
 }
