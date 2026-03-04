@@ -17,7 +17,7 @@ function cpt__folder() {
 		'not_found_in_trash'  => __( 'Non trouvé dans la corbeille'),
         'view_items'          => __( 'Voir la liste des Dossier'),
     );
-		
+
 	$args = array(
         'label'               => __( 'Dossier'),
 		'description'         => __( 'Tous sur Dossier'),
