@@ -17,7 +17,7 @@
         {{ __('Skip to content', 'sage') }}
       </a>
 
-      @if (is_post_type_archive() || is_singular(['is', 'folder', 'character']) || is_tax(get_object_taxonomies(['is', 'folder'])) )
+      @if ( !is_page() || ( is_page() && !is_page_template('default') ) )
         @include('sections.header')
       @endif
 

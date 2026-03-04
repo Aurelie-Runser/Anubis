@@ -1,21 +1,22 @@
 @php
-$post_id = get_the_ID();
+$post_id = empty($post_id) ? get_the_ID() : $post_id;
 
 // Récupération des métas
 $meta = [
-'linked_user' => get_post_meta($post_id, '_linked_user', true),
-'date_birthday' => get_post_meta($post_id, '_date_birthday', true),
-'residence_primary' => get_post_meta($post_id, '_residence_primary', true),
-'residence_secondary' => get_post_meta($post_id, '_residence_secondary', true),
-'gender' => get_post_meta($post_id, '_gender', true),
-'nationality' => get_post_meta($post_id, '_nationality', true),
-'date_recruitment' => get_post_meta($post_id, '_date_recruitment', true),
-'affiliated_ubsidiary' => get_post_meta($post_id, '_affiliated_ubsidiary', true),
-'pathologies' => wpautop(wp_kses_post(get_post_meta($post_id, '_pathologies', true))),
-'relatives' => wpautop(wp_kses_post(get_post_meta($post_id, '_relatives', true))),
+    'name' => get_the_title($post_id),
+    'linked_user' => get_post_meta($post_id, '_linked_user', true),
+    'date_birthday' => get_post_meta($post_id, '_date_birthday', true),
+    'residence_primary' => get_post_meta($post_id, '_residence_primary', true),
+    'residence_secondary' => get_post_meta($post_id, '_residence_secondary', true),
+    'gender' => get_post_meta($post_id, '_gender', true),
+    'nationality' => get_post_meta($post_id, '_nationality', true),
+    'date_recruitment' => get_post_meta($post_id, '_date_recruitment', true),
+    'affiliated_ubsidiary' => get_post_meta($post_id, '_affiliated_ubsidiary', true),
+    'pathologies' => wpautop(wp_kses_post(get_post_meta($post_id, '_pathologies', true))),
+    'relatives' => wpautop(wp_kses_post(get_post_meta($post_id, '_relatives', true))),
 ];
 
-$thumbnail_url = get_the_post_thumbnail_url($post->ID, 'medium');
+$thumbnail_url = get_the_post_thumbnail_url($post_id, 'medium');
 
 $user = get_userdata($meta['linked_user']);
 
@@ -36,13 +37,13 @@ $role_display = $roles ? implode(', ', $roles) : get_post_meta($post_id, '_role'
         <div class="content">
             <div class="member-picture">
                 @if($thumbnail_url)
-                    <img src="{{ $thumbnail_url }}" alt="{!! esc_attr($title) !!}">
+                    <img src="{{ $thumbnail_url }}" alt="{!! esc_attr(display_meta($meta['name'])) !!}">
                 @endif
             </div>
 
             <div class="member-infos">
                 <ul class="member-infos-section member-infos--list">
-                    <li>Identité Légal&nbsp;:&nbsp;<span>{!! display_meta($title) !!}<span></li>
+                    <li>Identité Légal&nbsp;:&nbsp;<span>{!! display_meta($meta['name']) !!}<span></li>
                     <li>Date de naissance&nbsp;:&nbsp;<span>{!! display_meta(format_date_fr($meta['date_birthday'])) !!}<span></li>
                     <li>Résidence Principale&nbsp;:&nbsp;<span>{!! display_meta($meta['residence_primary']) !!}<span></li>
                     <li>Résidence Actuelle&nbsp;:&nbsp;<span>{!! display_meta($meta['residence_secondary']) !!}<span></li>
@@ -77,14 +78,8 @@ $role_display = $roles ? implode(', ', $roles) : get_post_meta($post_id, '_role'
                     </div>
                 </div>
             </div>
-            
-            <div class="btn-logout">
-                <a href="#" class="btn">
-                    Deconnexion
-                </a>
-            </div>
-        </div>
 
+        </div>
 
     </div>
 </article>
