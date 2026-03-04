@@ -44,9 +44,7 @@ $role_display = $roles ? implode(', ', $roles) : get_post_meta($post_id, '_role'
             <div class="member-infos">
 
                 <ul class="member-infos-section member-infos--list">
-                    <li>
-                        <h2>Générales</h2>
-                    </li>
+                    <h2>Générales</h2>
                     <li>Identité Légal&nbsp;:&nbsp;<span>{!! display_meta($meta['name']) !!}<span></li>
                     <li>Date de naissance&nbsp;:&nbsp;<span>{!! display_meta(format_date_fr($meta['date_birthday'])) !!}<span></li>
                     <li>Résidence Principale&nbsp;:&nbsp;<span>{!! display_meta($meta['residence_primary']) !!}<span></li>

@@ -1,55 +1,117 @@
-.nav-primary {
-    position: fixed;
+.header-main {
+    position: sticky;
+    z-index: 99;
     top: 0;
-    height: 100svh;
-    width: 300px;
-    border-right: solid 2px var(--wp--preset--color--black);
+    width: 100%;
     background: var(--wp--preset--color--white);
-
-    ul {
+    
+    .nav-mobil {
         display: flex;
-        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        column-gap: var(--wp--preset--spacing--xs);
+        padding: var(--wp--preset--spacing--xs);
+        border-bottom: solid 2px var(--wp--preset--color--black);
+
+        .btn-hidden {
+            display: none;
+        }
+    }
+
+    .nav-primary {
+        position: relative;
+        display: none;
         height: 100%;
+        pointer-events: none;
 
-        li {
-            border-bottom: solid 2px var(--wp--preset--color--black);
-            
-            &:last-child {
-                margin-top: auto;
-                border-top: solid 2px var(--wp--preset--color--black);
-            }
-            
-            a {
-                display: block;
+        &.open {
+            display: block;
+            pointer-events: auto;
+
+            &::after {
+                content: "";
+                position: absolute;
+                z-index: -1;
+                top: 100%;
+                left: 0;
                 width: 100%;
-                padding: var(--wp--preset--spacing--md);
-                font-size: var(--wp--preset--font-size--lg);
-                font-weight: 200;
-                color: var(--wp--preset--color--black);
-                text-transform: uppercase;
-            }
-
-            &:hover {
-                background: var(--wp--preset--color--primary);
-
-                a {
-                    text-decoration: none;
-                    color: var(--wp--preset--color--white);
-                }
-            }
-
-            &:has(a.active) {
+                height: calc(100svh - 100%);
                 background: var(--wp--preset--color--black);
-
-                a {
-                    color: var(--wp--preset--color--white);
-                }
-            }
-
-            &:has(a[href="#"]) {
-                background: var(--wp--preset--color--restricted);
-                pointer-events: none;
+                opacity: .75;
             }
         }
+    
+        ul {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+    
+            li {
+                list-style: none;
+                border-bottom: solid 2px var(--wp--preset--color--black);
+                
+                a {
+                    display: block;
+                    width: 100%;
+                    padding: var(--wp--preset--spacing--md);
+                    font-size: var(--wp--preset--font-size--lg);
+                    font-weight: 200;
+                    color: var(--wp--preset--color--black);
+                    text-transform: uppercase;
+                }
+    
+                &:hover {
+                    background: var(--wp--preset--color--primary);
+    
+                    a {
+                        text-decoration: none;
+                        color: var(--wp--preset--color--white);
+                    }
+                }
+    
+                &:has(a.active) {
+                    background: var(--wp--preset--color--black);
+    
+                    a {
+                        color: var(--wp--preset--color--white);
+                    }
+                }
+    
+                &:has(a[href="#"]) {
+                    background: var(--wp--preset--color--restricted);
+                    pointer-events: none;
+                }
+            }
+        }
+    }
+
+    @media screen and (min-width: 1000px) {
+        position: fixed;
+        height: 100svh;
+        width: 300px;
+        border-bottom: 0;
+        border-right: solid 2px var(--wp--preset--color--black);
+
+        .nav-mobil {
+            display: none;
+        }
+
+        .nav-primary {
+            position: relative;
+            display: block;
+            pointer-events: auto;
+
+            ul {
+
+                li {
+
+                    &:last-child {
+                        margin-top: auto;
+                        border-top: solid 2px var(--wp--preset--color--black);
+                    }
+                }
+            }
+        }
+        
     }
 }

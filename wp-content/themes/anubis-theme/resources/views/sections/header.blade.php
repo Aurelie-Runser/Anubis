@@ -13,7 +13,21 @@
   $cpts = ['is', 'folder'];
 @endphp
 
-<header>
+<header class="header-main">
+  <div class="nav-mobil">
+    <a href="{{ home_url('/profil') }}" class="btn btn-icon" aria-label="Page profil">
+      <img src="{{ Vite::asset('resources/images/profil.svg') }}" aria-hidden="true">
+    </a>
+    
+    <button id="btn-menu--open" class="btn btn-icon" aria-label="Ouvrir le menu">
+      <img src="{{ Vite::asset('resources/images/menu.svg') }}" aria-hidden="true">
+    </button>
+    
+    <button id="btn-menu--close" class="btn btn-icon btn-hidden" aria-label="Fermer le menu">
+      <img src="{{ Vite::asset('resources/images/cross.svg') }}" aria-hidden="true">
+    </button>
+  </div>
+  
   <nav class="nav-primary" aria-label="Menu Principal">
     <ul>
       @foreach($cpts as $cpt)
