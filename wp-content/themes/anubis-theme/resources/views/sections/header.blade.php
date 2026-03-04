@@ -6,7 +6,7 @@
   $is_profil_template = false;
   if ( is_page() && $queried ) {
     $template_file = get_post_meta( $queried->ID, '_wp_page_template', true );
-    $is_profil_template = $template_file === 'template-profil.blade.php';
+    $is_profil_template = $template_file === 'templates/profil.blade.php';
   }
 
   // Liste de tes CPT à afficher dans le menu
