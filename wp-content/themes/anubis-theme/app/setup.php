@@ -141,5 +141,28 @@ function remove_menu_items()
             unset($menu[key($menu)]);
         }
     }
+
+    /* Désactive la page Réglages > Commentaires */
+    remove_submenu_page(
+        'options-general.php',
+        'options-discussion.php'
+    );
 }
 add_action('admin_menu', 'App\remove_menu_items');
+
+/* Désactive l'icon "Commentaires" dans le menu principal */
+add_action('admin_bar_menu', function($wp_admin_bar) {
+    $wp_admin_bar->remove_node('comments');
+}, 999);
+
+// Liste des items à supprimer dans le menu "Créer"
+add_action('admin_bar_menu', function($wp_admin_bar) {
+    $items_to_remove = [
+        'new-post',
+        // 'new-page',
+    ];
+
+    foreach ($items_to_remove as $item) {
+        $wp_admin_bar->remove_node($item);
+    }
+}, 999);
