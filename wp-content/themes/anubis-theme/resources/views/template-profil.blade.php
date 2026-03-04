@@ -14,22 +14,29 @@
 
     $character = $character_query->have_posts() ? $character_query->posts[0] : null;
 
-    $post_id = $character->ID;
 @endphp
-
+    
 @extends('layouts.app')
-
+    
 @section('content')
-
-@if($character)
+    
+@if( !empty($character) )
+    @php $post_id = $character->ID @endphp
     @include('partials.content-single-character')
+    
+    <div class="btn-logout">
+        <a href="<?= wp_logout_url(home_url('/login')) ?>" class="btn">
+            Déconnexion
+        </a>
+    </div>
 @else
-    <p>Votre compte n'a pas été trouvé.</p>
+    <div>
+        <h1>Vous avez un compte d'administration.</h1>
+        <p>Vous pouvez accéder au back-office pour éditer le site.</p>
+    
+        <a href="<?= home_url('/wp-admin') ?>" class="btn">
+            Aller éditer le site
+        </a>
+    </div>
 @endif
-
-<div class="btn-logout">
-    <a href="<?= wp_logout_url(home_url('/login')) ?>" class="btn">
-        Déconnexion
-    </a>
-</div>
 @endsection
