@@ -112,8 +112,19 @@ $linked_folders = is_array($linked_folders) ? $linked_folders : [];
             $ids = explode(',', $meta['galerie']);
         ?>
             <div class="gallery">
-                <?php foreach ($ids as $img_id) : ?>
-                    <?php echo wp_get_attachment_image($img_id, 'medium'); ?>
+                <?php foreach ($ids as $img_id) : 
+                    $description = get_post_field('post_content', $img_id);
+                ?>
+                    <figure>
+                        <?php 
+                        echo wp_get_attachment_image(
+                            $img_id, 
+                            'medium', 
+                            false, 
+                            ['alt' => esc_attr($description)]
+                        ); 
+                        ?>
+                    </figure>
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
