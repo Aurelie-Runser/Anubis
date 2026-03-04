@@ -36,11 +36,11 @@ $classes = $is_allowed ? 'archive-item' : 'archive-item is_not_allow';
   <th>
     @if( $is_allowed)
       <a href="{{ get_permalink() }}" class="btn btn-icon" aria-label="consulter la fiche de cet I.S.">
-        <img src="{{ Vite::asset('resources/images/eye.svg') }}" alt="consulter la fiche de cet I.S.">
+        <img src="{{ Vite::asset('resources/images/eye.svg') }}" aria-hidden="true">
       </a>
     @else
       <button class="btn btn-icon is_not_allowed" aria-label="vous n'avez pas les droits pous consulter la fiche de cet I.S.">
-        <img src="{{ Vite::asset('resources/images/eye-close.svg') }}" alt="vous n'avez pas les droits pous consulter la fiche de cet I.S.">
+        <img src="{{ Vite::asset('resources/images/eye-close.svg') }}" aria-hidden="true">
       </button>
     @endif
   </th>

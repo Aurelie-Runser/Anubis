@@ -5,8 +5,12 @@
   & > *,
   .contentwide{
     max-width: var(--wp--style--global--content-size, 1280px);
-    margin-inline: 300px 0;
     padding-inline: var(--wp--preset--spacing--sm);
+    margin-inline: auto;
+    
+    @media screen and (min-width: 1000px) {
+      margin-inline: 300px 0;
+    }
   }
 }
 
@@ -15,7 +19,7 @@
     
     & > *,
     .contentwide{
-      margin-inline: auto;
+      margin-inline: auto !important;
     }
   }
 }
