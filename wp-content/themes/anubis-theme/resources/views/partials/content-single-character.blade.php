@@ -37,12 +37,16 @@ $role_display = $roles ? implode(', ', $roles) : get_post_meta($post_id, '_role'
         <div class="content">
             <div class="member-picture">
                 @if($thumbnail_url)
-                    <img src="{{ $thumbnail_url }}" alt="{!! esc_attr(display_meta($meta['name'])) !!}">
+                <img src="{{ $thumbnail_url }}" alt="{!! esc_attr(display_meta($meta['name'])) !!}">
                 @endif
             </div>
 
             <div class="member-infos">
+
                 <ul class="member-infos-section member-infos--list">
+                    <li>
+                        <h2>Générales</h2>
+                    </li>
                     <li>Identité Légal&nbsp;:&nbsp;<span>{!! display_meta($meta['name']) !!}<span></li>
                     <li>Date de naissance&nbsp;:&nbsp;<span>{!! display_meta(format_date_fr($meta['date_birthday'])) !!}<span></li>
                     <li>Résidence Principale&nbsp;:&nbsp;<span>{!! display_meta($meta['residence_primary']) !!}<span></li>
@@ -53,28 +57,36 @@ $role_display = $roles ? implode(', ', $roles) : get_post_meta($post_id, '_role'
 
                 <div class="member-infos-section member-infos--2">
 
-                    <ul class="member-infos--list">
-                        <li>Date de recrutement&nbsp;:&nbsp;<span>{!! display_meta(format_date_fr($meta['date_recruitment'])) !!}<span></li>
-                        <li>Role&nbsp;:&nbsp;<span>{!! display_meta($role_display) !!}<span></li>
-                        <li>Filiale Affiliée&nbsp;:&nbsp;<span>{!! display_meta($meta['affiliated_ubsidiary']) !!}<span></li>
-                    </ul>
+                    <div>
+                        <h2>Anubis</h2>
 
-                    <div class="member-infos--multilines">
-                        <h2>Pathologies&nbsp;:</h2>
-                        @if(!empty($meta['pathologies']))
-                        {!! $meta['pathologies'] !!}
-                        @else
-                        {!! display_meta('') !!}
-                        @endif
+                        <ul class="member-infos--list">
+                            <li>Date de recrutement&nbsp;:&nbsp;<span>{!! display_meta(format_date_fr($meta['date_recruitment'])) !!}<span></li>
+                            <li>Role&nbsp;:&nbsp;<span>{!! display_meta($role_display) !!}<span></li>
+                            <li>Filiale Affiliée&nbsp;:&nbsp;<span>{!! display_meta($meta['affiliated_ubsidiary']) !!}<span></li>
+                        </ul>
                     </div>
 
-                    <div class="member-infos--multilines">
-                        <h2>Proches&nbsp;:</h2>
-                        @if(!empty($meta['relatives']))
-                        {!! $meta['relatives'] !!}
-                        @else
-                        {!! display_meta('') !!}
-                        @endif
+                    <div>
+                        <h2>Hors Anubis</h2>
+
+                        <div class="member-infos--multilines">
+                            <h3>Pathologies&nbsp;:</h3>
+                            @if(!empty($meta['pathologies']))
+                            {!! $meta['pathologies'] !!}
+                            @else
+                            {!! display_meta('') !!}
+                            @endif
+                        </div>
+
+                        <div class="member-infos--multilines">
+                            <h3>Proches&nbsp;:</h3>
+                            @if(!empty($meta['relatives']))
+                            {!! $meta['relatives'] !!}
+                            @else
+                            {!! display_meta('') !!}
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
