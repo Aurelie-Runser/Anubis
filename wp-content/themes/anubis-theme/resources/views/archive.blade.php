@@ -4,7 +4,6 @@
 
 
 @section('content')
-<a class="content-single-return" href="{{ get_home_url() }}">Retourner à l'accueil</a>
 
 @include('partials.archive-header')
 
