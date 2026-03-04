@@ -49,9 +49,6 @@ $linked_folders = is_array($linked_folders) ? $linked_folders : [];
                         @foreach($categories as $category)
                             <strong>
                                 {!! $category->name !!}
-                                @if($category->description)
-                                    ({!! $category->description !!})
-                                @endif
                             </strong>@if(!$loop->last), @endif
                         @endforeach
                     @else
