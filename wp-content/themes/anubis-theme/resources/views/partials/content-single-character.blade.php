@@ -18,15 +18,18 @@ $meta = [
 $thumbnail_url = get_the_post_thumbnail_url($post->ID, 'medium');
 
 $user = get_userdata($meta['linked_user']);
+
+$id = $user ? $user->display_name : get_post_meta($post_id, '_id', true);
+
 $roles = $user ? $user->roles : [];
-$role_display = $roles ? implode(', ', $roles) : 'Aucun rôle';
+$role_display = $roles ? implode(', ', $roles) : get_post_meta($post_id, '_role', true);;
 @endphp
 
 <article @php(post_class('h-entry'))>
     <div class="e-content">
         <header>
             <h1 class="p-name">
-                Identitifant&nbsp;:&nbsp;{!! display_meta($user ? $user->display_name : '') !!}
+                Identitifant&nbsp;:&nbsp;{!! display_meta($id) !!}
             </h1>
         </header>
 
