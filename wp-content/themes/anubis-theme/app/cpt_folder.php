@@ -96,6 +96,15 @@ function show_metabox_folder($post) {
         'order' => 'ASC',
     ]);
 
+    $linked_character = get_post_meta($post->ID, '_linked_character', true);
+    $linked_character = is_array($linked_character) ? $linked_character : [];
+    $character_posts = get_posts([
+        'post_type' => 'character',
+        'numberposts' => -1,
+        'orderby' => 'title',
+        'order' => 'ASC',
+    ]);
+
     wp_nonce_field('save_folder_metabox', 'folder_metabox_nonce');
     ?>
 
@@ -157,7 +166,6 @@ function show_metabox_folder($post) {
     <p>
         <strong>I.S. associés à ce dossier</strong>
     </p>
-
     <div style="max-height:200px; overflow:auto; border:1px solid #ddd; padding:10px; display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
         <?php foreach ($is_posts as $is): ?>
             <label style="display:block;">
@@ -168,6 +176,23 @@ function show_metabox_folder($post) {
                     <?php checked(in_array($is->ID, $linked_is)); ?>
                 >
                 <?php echo esc_html($is->post_title); ?>
+            </label>
+        <?php endforeach; ?>
+    </div>
+
+    <p>
+        <strong>Personnages associés à ce dossier</strong>
+    </p>
+    <div style="max-height:200px; overflow:auto; border:1px solid #ddd; padding:10px; display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+        <?php foreach ($character_posts as $character): ?>
+            <label style="display:block;">
+                <input
+                    type="checkbox"
+                    name="linked_character[]"
+                    value="<?php echo esc_attr($character->ID); ?>"
+                    <?php checked(in_array($character->ID, $linked_character)); ?>
+                >
+                <?php echo esc_html($character->post_title); ?>
             </label>
         <?php endforeach; ?>
     </div>
@@ -187,6 +212,7 @@ function save_metabox_folder($post_id) {
 
     if (!current_user_can('edit_post', $post_id)) return;
     if (get_post_type($post_id) !== 'folder') return;
+
 
     if (isset($_POST['roles_allowed']) && is_array($_POST['roles_allowed'])) {
         $roles = array_map('sanitize_text_field', $_POST['roles_allowed']);
@@ -211,11 +237,16 @@ function save_metabox_folder($post_id) {
         update_post_meta($post_id, '_description', sanitize_textarea_field($_POST['description']));
     }
 
+    if (isset($_POST['linked_character']) && is_array($_POST['linked_character'])) {
+        $roles = array_map('sanitize_text_field', $_POST['linked_character']);
+        update_post_meta($post_id, '_linked_character', $roles);
+    } else {
+        delete_post_meta($post_id, '_linked_character');
+    }
+
     // Sauvegarde relation bidirectionnelle IS <-> Folder
     if (isset($_POST['linked_is']) && is_array($_POST['linked_is'])) {
-
         $new_linked_is = array_map('intval', $_POST['linked_is']);
-
     } else {
         $new_linked_is = [];
     }

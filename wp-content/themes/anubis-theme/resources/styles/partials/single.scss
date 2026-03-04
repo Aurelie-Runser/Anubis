@@ -22,6 +22,13 @@
                     }
                 }
             }
+
+            .list-groupe {
+                display: flex;
+                flex-wrap: wrap;
+                column-gap: var(--wp--preset--spacing--xl);
+
+            }
             
             .list {
                 padding-left: calc(var(--wp--preset--font-size--base) * 2);

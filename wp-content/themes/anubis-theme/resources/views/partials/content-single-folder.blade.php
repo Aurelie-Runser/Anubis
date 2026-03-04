@@ -18,6 +18,9 @@ $meta = [
 $linked_is = get_post_meta($post_id, '_linked_is', true);
 $linked_is = is_array($linked_is) ? $linked_is : [];
 
+$linked_character = get_post_meta($post_id, '_linked_character', true);
+$linked_character = is_array($linked_character) ? $linked_character : [];
+
 @endphp
 
 <a class="content-single-return" href="{{ get_post_type_archive_link( get_post_type() ) }}">Retourner à la liste des {!! get_post_type_object( get_post_type() )->label !!}</a>
@@ -46,23 +49,50 @@ $linked_is = is_array($linked_is) ? $linked_is : [];
                 {!! display_meta('') !!}
             @endif
 
-            <h2>I.S. Liés&nbsp;:</h2>
-
-            @if(!empty($linked_is))
-                <ul class="list">
-                    @foreach($linked_is as $is_id)
-                        <li>
-                            <a href="{{ get_permalink($is_id) }}">
-                                {!! get_the_title($is_id) !!}
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            @else
-                <x-alert type="default">
-                    Aucun {!! get_post_type_object( "is" )->labels->singular_name !!} associé à ce {!! get_post_type_object( get_post_type() )->labels->singular_name !!}.
-                </x-alert>
-            @endif
+            <div class="list-groupe">
+                <div>
+                    <h2>I.S. Liés&nbsp;:</h2>
+                    @if(!empty($linked_is))
+                        <ul class="list">
+                            @foreach($linked_is as $is_id)
+                                <li>
+                                    <a href="{{ get_permalink($is_id) }}">
+                                        {!! get_the_title($is_id) !!}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <x-alert type="default">
+                            Aucun {!! get_post_type_object( "is" )->labels->singular_name !!} associé à ce {!! get_post_type_object( get_post_type() )->labels->singular_name !!}.
+                        </x-alert>
+                    @endif
+                </div>
+                <div>
+                    <h2>Personnels Liés&nbsp;:</h2>
+                    @if(!empty($linked_character))
+                        <ul class="list">
+                            @foreach($linked_character as $is_character)
+                                <li>
+                                    <a href="{{ get_permalink($is_character) }}">
+                                        {!! get_the_title($is_character) !!}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <x-alert type="default">
+                            Aucun Personnel associé à ce {!! get_post_type_object( get_post_type() )->labels->singular_name !!}.
+                        </x-alert>
+                    @endif
+                </div>
+                <div>
+                    <h2>Rapports&nbsp;:</h2>
+                    <x-alert type="default">
+                        Aucun Rapport associé à ce {!! get_post_type_object( get_post_type() )->labels->singular_name !!}.
+                    </x-alert>
+                </div>
+            </div>
 
 
             <h2>Historique</h2>
