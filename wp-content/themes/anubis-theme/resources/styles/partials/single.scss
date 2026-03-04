@@ -16,6 +16,10 @@
                     list-style: none;    
                     font-size: var(--wp--preset--font-size--lg);
                     margin-bottom: var(--wp--preset--spacing--sm);
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
                 }
             }
             

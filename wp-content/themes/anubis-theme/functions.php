@@ -49,7 +49,7 @@ Application::configure()
 |
 */
 
-collect(['setup', 'helpers', 'custom_roles', 'custom_pagination', 'is_user_allowed_for_content', 'cpt_is', 'cpt_folder'])
+collect(['setup', 'helpers', 'custom_roles', 'custom_pagination', 'is_user_allowed_for_content', 'cpt_character', 'cpt_is', 'cpt_folder'])
     ->each(function ($file) {
         if (! locate_template($file = "app/{$file}.php", true, true)) {
             wp_die(

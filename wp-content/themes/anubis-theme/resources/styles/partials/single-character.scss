@@ -1,0 +1,118 @@
+.single.single-character {
+  // border: blue 2px solid;
+
+  .e-content {
+    display: block;
+
+    .content {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: var(--wp--preset--spacing--md);
+
+      .member-picture {
+        order: 1;
+        position: relative;
+        display: block;
+        flex: none;
+        width: 300px;
+        height: 400px;
+        background: var(--wp--preset--color--grey-light);
+
+        img {
+          position: relative;
+          z-index: 1;
+          width: 300px;
+          height: 400px;
+          object-fit: cover;
+        }
+
+        &::before {
+          content: "Photo d'identité";
+          position: absolute;
+          z-index: 0;
+          top: 50%;
+          left: 0;
+          translate: 0 -50%;
+          text-align: center;
+          width: 100%;
+          font-size: var(--wp--preset--font-size--xl);
+          font-weight: 400;
+        }
+      }
+
+      .member-infos {
+        //   border: green 2px solid;
+        order: 2;
+        flex: 1 1 425px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--wp--preset--spacing--md);
+
+        .member-infos-section {
+          // border: blue 2px solid;
+          flex: 1 1 250px;
+          width: 50%;
+
+          .member-infos--multilines {
+            h2 {
+              margin-block: var(--wp--preset--spacing--md)
+                var(--wp--preset--spacing--xs);
+              font-size: var(--wp--preset--font-size--base);
+            }
+
+            p {
+              margin-bottom: 0;
+              margin-left: var(--wp--preset--spacing--xs);
+              font-weight: 400;
+            }
+          }
+        }
+
+        .member-infos--list {
+          li {
+            list-style: none;
+            margin-bottom: var(--wp--preset--spacing--sm);
+            display: flex;
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+
+            & > * {
+              flex: none;
+              display: block;
+            }
+
+            span {
+              display: block;
+              flex: 1 1 1px;
+              text-transform: capitalize;
+            }
+          }
+        }
+      }
+
+      .btn-logout {
+        order: 3;
+        flex: none;
+        width: 100%;
+        margin-top: auto;
+        text-align: end;
+      }
+    }
+
+    @media screen and (min-width: 1000px) {
+      .content {
+        .member-picture {
+          order: 2;
+        }
+
+        .member-infos {
+          order: 1;
+        }
+      }
+    }
+  }
+}

@@ -36,34 +36,34 @@
           background-color: var(--wp--preset--color--grey-light);
         }
 
-        .btn-archive {
-          display: block;
-          height: 50px;
-          width: 50px;
-          margin-inline: auto;
-          padding: var(--wp--preset--spacing--xs);
-          border-radius: 5px;
-          border: none;
-          background-color: var(--wp--preset--color--black);
-          color: var(--wp--preset--color--white);
-          text-decoration: none !important;
+        // .btn-archive {
+        //   display: block;
+        //   height: 50px;
+        //   width: 50px;
+        //   margin-inline: auto;
+        //   padding: var(--wp--preset--spacing--xs);
+        //   border-radius: 5px;
+        //   border: none;
+        //   background-color: var(--wp--preset--color--black);
+        //   color: var(--wp--preset--color--white);
+        //   text-decoration: none !important;
 
-          img {
-            width: 30px;
-            height: 30px;
-            object-fit: contain;
-          }
+        //   img {
+        //     width: 30px;
+        //     height: 30px;
+        //     object-fit: contain;
+        //   }
 
-          &:hover {
-            background-color: var(--wp--preset--color--primary);
-          }
+        //   &:hover {
+        //     background-color: var(--wp--preset--color--primary);
+        //   }
 
-          &.is_not_allowed {
-            position: relative;
-            background-color: var(--wp--preset--color--restricted);
-            cursor: not-allowed;
-          }
-        }
+        //   &.is_not_allowed {
+        //     position: relative;
+        //     background-color: var(--wp--preset--color--restricted);
+        //     cursor: not-allowed;
+        //   }
+        // }
       }
     }
   }

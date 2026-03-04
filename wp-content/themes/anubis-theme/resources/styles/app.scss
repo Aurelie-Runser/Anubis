@@ -1,12 +1,14 @@
 @use "@styles/global" as *;
 
 @use '@styles/elements/alert' as * ;
+@use '@styles/elements/btn' as * ;
 @use '@styles/elements/pagination' as * ;
 @use '@styles/elements/texts' as *;
 @use '@styles/elements/wides' as * ;
 
 @use "@styles/partials/archive-header" as *;
 @use "@styles/partials/content" as *;
+@use "@styles/partials/single-character" as *;
 @use "@styles/partials/single" as *;
 
 @use "@styles/sections/header" as *;
