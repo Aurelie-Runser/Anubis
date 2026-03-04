@@ -83,7 +83,7 @@ $linked_folders = is_array($linked_folders) ? $linked_folders : [];
 
             <h2>Dossiers Liés :</h2>
             @if(!empty($linked_folders))
-                <ul class="linked-folders-list">
+                <ul class="list">
                     @foreach($linked_folders as $folder_id)
                         <li>
                             <a href="{{ get_permalink($folder_id) }}">

@@ -49,7 +49,7 @@ $linked_is = is_array($linked_is) ? $linked_is : [];
             <h2>I.S. Liés&nbsp;:</h2>
 
             @if(!empty($linked_is))
-                <ul class="linked-is-list">
+                <ul class="list">
                     @foreach($linked_is as $is_id)
                         <li>
                             <a href="{{ get_permalink($is_id) }}">
