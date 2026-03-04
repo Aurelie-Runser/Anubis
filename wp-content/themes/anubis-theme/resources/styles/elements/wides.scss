@@ -5,8 +5,18 @@
   & > *,
   .contentwide{
     max-width: var(--wp--style--global--content-size, 1280px);
-    margin-inline: auto;
+    margin-inline: 300px 0;
     padding-inline: var(--wp--preset--spacing--sm);
+  }
+}
+
+.page {
+  .main {
+    
+    & > *,
+    .contentwide{
+      margin-inline: auto;
+    }
   }
 }
 

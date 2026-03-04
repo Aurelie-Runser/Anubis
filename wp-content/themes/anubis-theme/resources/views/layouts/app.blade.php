@@ -17,7 +17,9 @@
         {{ __('Skip to content', 'sage') }}
       </a>
 
-      <!-- @include('sections.header') -->
+      @if (is_post_type_archive() || is_singular(['is', 'folder']) || is_tax(get_object_taxonomies(['is', 'folder'])) )
+        @include('sections.header')
+      @endif
 
       <main id="main" class="main">
         @yield('content')
