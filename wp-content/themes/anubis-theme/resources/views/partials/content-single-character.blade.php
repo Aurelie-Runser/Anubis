@@ -1,4 +1,6 @@
 @php
+global $wp_roles;
+
 $post_id = empty($post_id) ? get_the_ID() : $post_id;
 
 // Récupération des métas
@@ -23,8 +25,16 @@ $user = get_userdata($meta['linked_user']);
 $id = $user ? $user->display_name : get_post_meta($post_id, '_id', true);
 
 $roles = $user ? $user->roles : [];
-$role_display = $roles ? implode(', ', $roles) : get_post_meta($post_id, '_role', true);;
-@endphp
+
+$role_display = '';
+
+if ($roles) {
+    $role_display = implode(', ', array_map(function($slug) use ($wp_roles) {
+        return $wp_roles->roles[$slug]['name'] ?? $slug;
+    }, $roles));
+} else {
+    $role_display = get_post_meta($post_id, '_role', true);
+}@endphp
 
 <article @php(post_class('h-entry'))>
     <div class="e-content">

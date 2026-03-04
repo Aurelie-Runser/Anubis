@@ -15,6 +15,8 @@ define('ROLES_DEFAULT', [
 
 define('ROLES_PASSIVE', [
     'agent',
+    'super_agent',
+    'snhffr_crefbaar',
     'directeur'
 ]);
 
@@ -29,16 +31,23 @@ define('ROLES_DELETE', [
  */
 function custom_roles_init() {
 
-    add_role(
-        'agent',
-        'Agent',
-        [
-            'read' => true, // obligatoire pour être connecté
-        ]
-    );
+    $roles = [
+        'agent' => 'Agent',
+        'super_agent' => 'Super Agent',
+        'snhffr_crefbaar' => 'Snhffr Crefbaar',
+        'directeur' => 'Directeur',
+    ];
+
+    foreach ($roles as $slug => $label) {
+        if (!get_role($slug)) {
+            add_role($slug, $label, [
+                'read' => true,
+            ]);
+        }
+    }
 
 }
-add_action('init', 'custom_roles_init');
+// add_action('init', 'custom_roles_init');
 
 /**
  * 2️⃣ Désactivation des capacités des rôles WordPress par défaut
