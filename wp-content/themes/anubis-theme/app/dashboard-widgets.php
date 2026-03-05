@@ -118,9 +118,21 @@ add_action('wp_dashboard_setup', function () {
                     <source src="<?php echo esc_url(home_url('?private_video=create-is.mp4')); ?>" type="video/mp4">
                 </video>
             </li>
+            <li>
+                <strong>Créer un Personnage</strong><br>
+                <video width="100%" height="200" controls>
+                    <source src="<?php echo esc_url(home_url('?private_video=create-character.mp4')); ?>" type="video/mp4">
+                </video>
+            </li>
+            <li>
+                <strong>Créer un Dossier</strong><br>
+                <video width="100%" height="200" controls>
+                    <source src="<?php echo esc_url(home_url('?private_video=create-folder.mp4')); ?>" type="video/mp4">
+                </video>
+            </li>
         </ul>
 
-        <p>Mise à jour le 04/03/2026</p>
+        <p>Mise à jour le 05/03/2026</p>
 <?php
         }
     );
