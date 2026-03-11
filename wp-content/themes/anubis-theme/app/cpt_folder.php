@@ -296,6 +296,88 @@ function save_metabox_folder($post_id) {
 }
 add_action('save_post_folder', 'save_metabox_folder');
 
+// Colonnes tableau backoffice
+function folder_admin_columns($columns) {
+
+    $new_columns = [];
+
+    foreach ($columns as $key => $label) {
+
+        $new_columns[$key] = $label;
+
+        if ($key === 'title') {
+            $new_columns['linked_is'] = 'IS associés';
+            $new_columns['linked_character'] = 'Personnages associés';
+            $new_columns['roles_allowed'] = 'Rôles autorisés';
+        }
+    }
+
+    return $new_columns;
+}
+add_filter('manage_folder_posts_columns', 'folder_admin_columns');
+
+// Contenu des colonnes du tableau en backoffice
+function folder_admin_column_content($column, $post_id) {
+
+    if ($column === 'roles_allowed') {
+
+        $roles = get_post_meta($post_id, '_roles_allowed', true);
+
+        if (!empty($roles)) {
+            echo esc_html(implode(', ', $roles));
+        } else {
+            echo '—';
+        }
+    }
+
+    if ($column === 'linked_is') {
+
+        $linked_is = get_post_meta($post_id, '_linked_is', true);
+
+        if (!empty($linked_is)) {
+
+            $links = [];
+
+            foreach ($linked_is as $is_id) {
+
+                $title = get_the_title($is_id);
+                $url   = get_edit_post_link($is_id);
+
+                $links[] = '<a href="'.esc_url($url).'">'.esc_html($title).'</a>';
+            }
+
+            echo implode(', ', $links);
+
+        } else {
+            echo '—';
+        }
+    }
+
+    if ($column === 'linked_character') {
+
+        $linked_character = get_post_meta($post_id, '_linked_character', true);
+
+        if (!empty($linked_character)) {
+
+            $links = [];
+
+            foreach ($linked_character as $character_id) {
+
+                $title = get_the_title($character_id);
+                $url   = get_edit_post_link($character_id);
+
+                $links[] = '<a href="'.esc_url($url).'">'.esc_html($title).'</a>';
+            }
+
+            echo implode(', ', $links);
+
+        } else {
+            echo '—';
+        }
+    }
+
+}
+add_action('manage_folder_posts_custom_column', 'folder_admin_column_content', 10, 2);
 
 // function add_folder_caps() {
 //     $role = get_role('administrator');

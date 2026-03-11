@@ -315,6 +315,123 @@ add_action('admin_head', function () {
     }
 });
 
+// Colonnes tableau backoffice
+function character_admin_columns($columns) {
+
+    $new = [];
+
+    foreach ($columns as $key => $label) {
+
+        $new[$key] = $label;
+
+        if ($key === 'title') {
+            $new['linked_user'] = 'Lier à un Compte';
+            $new['identifier'] = 'Identifiant';
+            $new['role'] = 'Rôle';
+        }
+    }
+
+    return $new;
+}
+
+add_filter('manage_character_posts_columns', 'character_admin_columns');
+
+// Contenu des colonnes du tableau en backoffice
+function character_admin_column_content($column, $post_id) {
+
+    if ($column === 'linked_user') {
+
+        $user_id = get_post_meta($post_id, '_linked_user', true);
+
+        if ($user_id) {
+            echo '<span class="char-yes">Oui</span>';
+        } else {
+            echo '<span class="char-no">Non</span>';
+        }
+    }
+
+    if ($column === 'identifier') {
+
+        $user_id = get_post_meta($post_id, '_linked_user', true);
+
+        if ($user_id) {
+
+            $user = get_userdata($user_id);
+
+            if ($user) {
+                echo esc_html($user->user_login);
+            }
+
+        } else {
+
+            $id = get_post_meta($post_id, '_id', true);
+
+            if ($id) {
+                echo esc_html($id);
+            } else {
+                echo '—';
+            }
+
+        }
+    }
+
+    if ($column === 'role') {
+
+        $user_id = get_post_meta($post_id, '_linked_user', true);
+
+        if ($user_id) {
+
+            $user = get_userdata($user_id);
+
+            if ($user && !empty($user->roles)) {
+                echo esc_html(implode(', ', $user->roles));
+            }
+
+        } else {
+
+            $role = get_post_meta($post_id, '_role', true);
+
+            if ($role) {
+                echo esc_html($role);
+            } else {
+                echo '—';
+            }
+
+        }
+    }
+
+}
+add_action('manage_character_posts_custom_column', 'character_admin_column_content', 10, 2);
+
+add_action('admin_head', function () {
+
+    $screen = get_current_screen();
+
+    if ($screen->post_type === 'character') {
+
+        echo '<style>
+
+        .char-yes{
+            background:#d4edda;
+            color:#155724;
+            padding:4px 8px;
+            border-radius:4px;
+            font-weight:600;
+        }
+
+        .char-no{
+            background:#f8d7da;
+            color:#721c24;
+            padding:4px 8px;
+            border-radius:4px;
+            font-weight:600;
+        }
+
+        </style>';
+    }
+
+});
+
 // function add_character_caps() {
 //     // $role = get_role('administrator');
 //     $role = get_role('editor');

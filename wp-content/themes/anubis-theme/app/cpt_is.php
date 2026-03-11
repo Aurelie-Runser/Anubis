@@ -1,45 +1,47 @@
 <?php
 
-function cpt__is() {
+function cpt__is()
+{
 
-	$labels = array(
-		'name'                => _x( 'I.S.', 'Post Type General Name'),
-		'singular_name'       => _x( 'I.S.', 'Post Type Singular Name'),
-		'menu_name'           => __( 'I.S.'),
-		'all_items'           => __( 'Tous les I.S.'),
-		'view_item'           => __( 'Voir les I.S.'),
-		'add_new_item'        => __( 'Ajouter un nouvel I.S.'),
-		'add_new'             => __( 'Ajouter'),
-		'edit_item'           => __( 'Editer l\'I.S.'),
-		'update_item'         => __( 'Modifier l\'I.S.'),
-		'search_items'        => __( 'Rechercher un I.S.'),
-		'not_found'           => __( 'Non trouvé'),
-		'not_found_in_trash'  => __( 'Non trouvé dans la corbeille'),
-        'view_items'          => __( 'Voir la liste des I.S.'),
+    $labels = array(
+        'name'                => _x('I.S.', 'Post Type General Name'),
+        'singular_name'       => _x('I.S.', 'Post Type Singular Name'),
+        'menu_name'           => __('I.S.'),
+        'all_items'           => __('Tous les I.S.'),
+        'view_item'           => __('Voir les I.S.'),
+        'add_new_item'        => __('Ajouter un nouvel I.S.'),
+        'add_new'             => __('Ajouter'),
+        'edit_item'           => __('Editer l\'I.S.'),
+        'update_item'         => __('Modifier l\'I.S.'),
+        'search_items'        => __('Rechercher un I.S.'),
+        'not_found'           => __('Non trouvé'),
+        'not_found_in_trash'  => __('Non trouvé dans la corbeille'),
+        'view_items'          => __('Voir la liste des I.S.'),
     );
-		
-	$args = array(
-        'label'               => __( 'I.S.'),
-		'description'         => __( 'Tous sur I.S.'),
-		'labels'              => $labels,
-		'supports'            => ['title'],
-		'show_in_rest'        => true,
-		'hierarchical'        => false,
-		'public'              => true,
-		'has_archive'         => true,
+
+    $args = array(
+        'label'               => __('I.S.'),
+        'description'         => __('Tous sur I.S.'),
+        'labels'              => $labels,
+        'supports'            => ['title'],
+        'show_in_rest'        => true,
+        'hierarchical'        => false,
+        'public'              => true,
+        'has_archive'         => true,
         'show_in_menu'        => true,
         'show_ui'             => true,
-		'rewrite'			  => ['slug' => 'is', 'with_front' => false],
+        'rewrite'              => ['slug' => 'is', 'with_front' => false],
         'menu_icon'           => 'dashicons-pets',
         'capability_type'     => 'is',
         'map_meta_cap'        => true,
-	);
-	
-	register_post_type( 'is', $args );
-}
-add_action( 'init', 'cpt__is', 0 );
+    );
 
-function taxonomy__is() {
+    register_post_type('is', $args);
+}
+add_action('init', 'cpt__is', 0);
+
+function taxonomy__is()
+{
 
     $labels = array(
         'name'              => 'Niveaux de dangerosités',
@@ -74,12 +76,14 @@ add_action('init', 'taxonomy__is');
  * Metabox complète pour le CPT "is"
  */
 
-function add_metabox_is() {
+function add_metabox_is()
+{
     add_meta_box('is_meta', 'Informations sur l\'I.S.', 'show_metabox_is', 'is');
 }
 add_action('add_meta_boxes', 'add_metabox_is');
 
-function show_metabox_is($post) {
+function show_metabox_is($post)
+{
 
     // Récupération des metas
     $id            = get_post_meta($post->ID, '_id', true);
@@ -98,15 +102,17 @@ function show_metabox_is($post) {
     $galerie_ids = $galerie ? explode(',', $galerie) : [];
 
     wp_nonce_field('save_is_metabox', 'is_metabox_nonce');
-    ?>
+?>
 
     <!-- Numéro -->
     <p><label for="id">Numéro</label><br />
-    <input id="id" type="number" name="id" value="<?php echo esc_attr($id); ?>" /></p>
+        <input id="id" type="number" name="id" value="<?php echo esc_attr($id); ?>" />
+    </p>
 
     <!-- Nom vernaculaire -->
     <p><label for="name">Nom vernaculaire</label><br />
-    <input id="name" type="text" name="name" value="<?php echo esc_attr($name); ?>" /></p>
+        <input id="name" type="text" name="name" value="<?php echo esc_attr($name); ?>" />
+    </p>
 
     <!-- ROLES AUTORISÉS -->
     <p>
@@ -118,8 +124,7 @@ function show_metabox_is($post) {
                     type="checkbox"
                     name="roles_allowed[]"
                     value="<?php echo esc_attr($role); ?>"
-                    <?php checked(in_array($role, $roles_allowed)); ?>
-                >
+                    <?php checked(in_array($role, $roles_allowed)); ?>>
                 <?php echo esc_html(ucfirst($role)); ?>
             </label>
         <?php endforeach; ?>
@@ -153,8 +158,7 @@ function show_metabox_is($post) {
             type="date"
             id="date_discover"
             name="date_discover"
-            value="<?php echo esc_attr($date_discover); ?>"
-        >
+            value="<?php echo esc_attr($date_discover); ?>">
     </p>
 
     <!-- DATE DE CAPTURE -->
@@ -164,8 +168,7 @@ function show_metabox_is($post) {
             type="date"
             id="date_catch"
             name="date_catch"
-            value="<?php echo esc_attr($date_catch); ?>"
-        >
+            value="<?php echo esc_attr($date_catch); ?>">
     </p>
 
     <!-- CAPACITIES -->
@@ -177,8 +180,7 @@ function show_metabox_is($post) {
         <textarea
             name="capacities"
             id="capacities"
-            style="width:100%; height:200px"
-        ><?php echo esc_textarea($capacities); ?></textarea>
+            style="width:100%; height:200px"><?php echo esc_textarea($capacities); ?></textarea>
     </p>
 
 
@@ -188,8 +190,7 @@ function show_metabox_is($post) {
         <textarea
             name="description"
             id="description"
-            style="width:100%; height:200px"
-        ><?php echo esc_textarea($description); ?></textarea>
+            style="width:100%; height:200px"><?php echo esc_textarea($description); ?></textarea>
     </p>
 
     <!-- GALERIE -->
@@ -200,28 +201,31 @@ function show_metabox_is($post) {
             Sélectionner des images
         </button>
 
-        <div id="gallery_preview" style="margin-top:10px;">
-            <?php
-            foreach ($galerie_ids as $img_id) {
-                $img = wp_get_attachment_image($img_id, 'thumbnail');
-                if ($img) {
-                    echo '<span style="margin-right:5px; display:inline-block;">' . $img . '</span>';
-                }
+    <div id="gallery_preview" style="margin-top:10px;">
+        <?php
+        foreach ($galerie_ids as $img_id) {
+            $img = wp_get_attachment_image($img_id, 'thumbnail');
+            if ($img) {
+                echo '<span style="margin-right:5px; display:inline-block;">' . $img . '</span>';
             }
-            ?>
-        </div>
+        }
+        ?>
+    </div>
     </p>
 
-    <?php
+<?php
 }
 
 
-function save_metabox_is($post_id) {
+function save_metabox_is($post_id)
+{
 
     // Sécurité
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
-    if (!isset($_POST['is_metabox_nonce']) ||
-        !wp_verify_nonce($_POST['is_metabox_nonce'], 'save_is_metabox')) {
+    if (
+        !isset($_POST['is_metabox_nonce']) ||
+        !wp_verify_nonce($_POST['is_metabox_nonce'], 'save_is_metabox')
+    ) {
         return;
     }
 
@@ -279,7 +283,8 @@ function save_metabox_is($post_id) {
 add_action('save_post_is', 'save_metabox_is');
 
 
-function is_enqueue_admin_scripts($hook) {
+function is_enqueue_admin_scripts($hook)
+{
     if ($hook === 'post-new.php' || $hook === 'post.php') {
         global $post;
         if ('is' === $post->post_type) {
@@ -290,7 +295,71 @@ function is_enqueue_admin_scripts($hook) {
 }
 add_action('admin_enqueue_scripts', 'is_enqueue_admin_scripts');
 
-// function add_is_caps() {
+// Colonnes tableau backoffice
+function is_admin_columns($columns)
+{
+
+    $new_columns = [];
+
+    foreach ($columns as $key => $label) {
+
+        $new_columns[$key] = $label;
+
+        if ($key === 'title') {
+            $new_columns['is_number'] = 'Numéro';
+            $new_columns['is_state'] = 'État';
+            $new_columns['roles_allowed'] = 'Rôles autorisés';
+        }
+    }
+
+    return $new_columns;
+}
+add_filter('manage_is_posts_columns', 'is_admin_columns');
+
+// Contenu des colonnes du tableau en backoffice
+function is_admin_column_content($column, $post_id)
+{
+
+    if ($column === 'is_number') {
+
+        $id = get_post_meta($post_id, '_id', true);
+
+        echo $id ? esc_html($id) : '—';
+    }
+
+    if ($column === 'is_state') {
+
+        $etat = get_post_meta($post_id, '_etat', true);
+
+        $labels = [
+            'capture' => 'Capturé',
+            'under_control' => 'Sous contrôle',
+            'liberte' => 'En liberté',
+            'echappe' => 'Échappé'
+        ];
+
+        if ($etat && isset($labels[$etat])) {
+            echo '<span class="is-state is-' . $etat . '">' . $labels[$etat] . '</span>';
+        } else {
+            echo '—';
+        }
+    }
+
+
+    if ($column === 'roles_allowed') {
+
+        $roles = get_post_meta($post_id, '_roles_allowed', true);
+
+        if (!empty($roles)) {
+            echo esc_html(implode(', ', $roles));
+        } else {
+            echo '—';
+        }
+    }
+}
+add_action('manage_is_posts_custom_column', 'is_admin_column_content', 10, 2);
+                    
+                    // function add_is_caps() {
 //     $role = get_role('administrator');
 //     $role = get_role('editor');
 
