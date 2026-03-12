@@ -155,7 +155,7 @@ function show_metabox_folder($post)
     </p>
 
     <p>
-        <label for="description"><strong>Description</strong></label><br>
+        <label for="description"><strong>Résumé</strong></label><br>
         <textarea
             name="description"
             id="description"
@@ -288,8 +288,9 @@ function render_folder_logs_metabox($post)
                     <td>
                         <select name="logs[<?php echo $i ?>][target]">
                             <option value="" <?php selected($log['target'] ?? '', '') ?>>Ce Dossier</option>
-                            <option value="roles" <?php selected($log['target'] ?? '', 'roles') ?>>Roles</option>
+                            <option value="roles_allowed" <?php selected($log['target'] ?? '', 'roles_allowed') ?>>Roles Autorisés</option>
                             <option value="description" <?php selected($log['target'] ?? '', 'description') ?>>Description</option>
+                            <option value="summary" <?php selected($log['target'] ?? '', 'summary') ?>>Résumé</option>
                             <option value="is" <?php selected($log['target'] ?? '', 'is') ?>>IS</option>
                             <option value="character" <?php selected($log['target'] ?? '', 'character') ?>>Personnage</option>
                         </select>
@@ -393,8 +394,9 @@ function render_folder_logs_metabox($post)
 <td>
 <select name="logs[${index}][target]">
 <option value="">Ce Dossier</option>
-<option value="roles">Roles</option>
+<option value="roles_allowed">Roles Autorisés</option>
 <option value="description">Description</option>
+<option value="summary">Résumé</option>
 <option value="is">IS</option>
 <option value="character">Personnage</option>
 </select>
@@ -436,12 +438,15 @@ function render_folder_logs_metabox($post)
 
         function updateTargetField(row) {
 
-            const target = row.querySelector('[name*="[target]"]').value
+            const targetSelect = row.querySelector('[name*="[target]"]')
+            const target = targetSelect.value
             const field = row.querySelector('.target-field')
+
+            const name = targetSelect.name.replace('[target]', '')
 
             if (target === "character") {
 
-                field.innerHTML = `<select name="${row.dataset.name}[target_id]">
+                field.innerHTML = `<select name="${name}[target_id]">
 <option value="">—</option>
 <?php foreach ($characters as $c): ?>
 <option value="<?php echo $c->ID ?>">
@@ -452,7 +457,7 @@ function render_folder_logs_metabox($post)
 
             } else if (target === "is") {
 
-                field.innerHTML = `<select name="${row.dataset.name}[target_id]">
+                field.innerHTML = `<select name="${name}[target_id]">
 <option value="">—</option>
 <?php foreach ($is_posts as $is): ?>
 <option value="<?php echo $is->ID ?>">

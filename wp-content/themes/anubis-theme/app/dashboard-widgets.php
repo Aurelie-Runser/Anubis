@@ -130,9 +130,15 @@ add_action('wp_dashboard_setup', function () {
                     <source src="<?php echo esc_url(home_url('?private_video=create-folder.mp4')); ?>" type="video/mp4">
                 </video>
             </li>
+            <li>
+                <strong>Ajouter d'un Historique aux Dossiers et I.S.</strong><br>
+                <video width="100%" height="200" controls>
+                    <source src="<?php echo esc_url(home_url('?private_video=add-logs.mp4')); ?>" type="video/mp4">
+                </video>
+            </li>
         </ul>
 
-        <p>Mise à jour le 05/03/2026</p>
+        <p>Mise à jour le 12/03/2026</p>
 <?php
         }
     );
