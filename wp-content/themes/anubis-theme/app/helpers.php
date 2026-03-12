@@ -23,3 +23,13 @@ function is_etat_label($etat) {
 
     return $labels[$etat] ?? $etat;
 }
+
+$ACTION_LABELS = [
+    'create' => 'CREATE',
+    'update' => 'UPDATE',
+    'delete' => 'DELETE',
+    'join' => 'JOIN',
+    'unlink' => 'UNLINK',
+    'read' => 'READ',
+    'close' => 'CLOSE',
+];

@@ -1,43 +1,45 @@
 <?php
 
-function cpt__folder() {
+function cpt__folder()
+{
 
-	$labels = array(
-		'name'                => _x( 'Dossiers', 'Post Type General Name'),
-		'singular_name'       => _x( 'Dossier', 'Post Type Singular Name'),
-		'menu_name'           => __( 'Dossiers'),
-		'all_items'           => __( 'Tous les Dossiers'),
-		'view_item'           => __( 'Voir les Dossiers'),
-		'add_new_item'        => __( 'Ajouter un nouveau Dossier'),
-		'add_new'             => __( 'Ajouter'),
-		'edit_item'           => __( 'Editer le Dossier'),
-		'update_item'         => __( 'Modifier le Dossier'),
-		'search_items'        => __( 'Rechercher un Dossier'),
-		'not_found'           => __( 'Non trouvé'),
-		'not_found_in_trash'  => __( 'Non trouvé dans la corbeille'),
-        'view_items'          => __( 'Voir la liste des Dossier'),
+    $labels = array(
+        'name'                => _x('Dossiers', 'Post Type General Name'),
+        'singular_name'       => _x('Dossier', 'Post Type Singular Name'),
+        'menu_name'           => __('Dossiers'),
+        'all_items'           => __('Tous les Dossiers'),
+        'view_item'           => __('Voir les Dossiers'),
+        'add_new_item'        => __('Ajouter un nouveau Dossier'),
+        'add_new'             => __('Ajouter'),
+        'edit_item'           => __('Editer le Dossier'),
+        'update_item'         => __('Modifier le Dossier'),
+        'search_items'        => __('Rechercher un Dossier'),
+        'not_found'           => __('Non trouvé'),
+        'not_found_in_trash'  => __('Non trouvé dans la corbeille'),
+        'view_items'          => __('Voir la liste des Dossier'),
     );
 
-	$args = array(
-        'label'               => __( 'Dossier'),
-		'description'         => __( 'Tous sur Dossier'),
-		'labels'              => $labels,
-		'supports'            => array( 'title'),
-		'show_in_rest'        => true,
-		'hierarchical'        => false,
-		'public'              => true,
-		'has_archive'         => true,
-		'rewrite'			  => array( 'slug' => 'dossiers'),
+    $args = array(
+        'label'               => __('Dossier'),
+        'description'         => __('Tous sur Dossier'),
+        'labels'              => $labels,
+        'supports'            => array('title'),
+        'show_in_rest'        => true,
+        'hierarchical'        => false,
+        'public'              => true,
+        'has_archive'         => true,
+        'rewrite'              => array('slug' => 'dossiers'),
         'menu_icon'           => 'dashicons-category',
         'capability_type'     => 'folder',
         'map_meta_cap'        => true,
-	);
-	
-	register_post_type( 'folder', $args );
-}
-add_action( 'init', 'cpt__folder', 0 );
+    );
 
-function taxonomy__folder() {
+    register_post_type('folder', $args);
+}
+add_action('init', 'cpt__folder', 0);
+
+function taxonomy__folder()
+{
 
     $labels = array(
         'name'              => 'Années Ouverts',
@@ -71,12 +73,14 @@ add_action('init', 'taxonomy__folder');
  * Metabox complète pour le CPT "Dossier"
  */
 
-function add_metabox_folder() {
-    add_meta_box('folder_meta', 'Informations sur Dossier.', 'show_metabox_folder', 'folder');
+function add_metabox_folder()
+{
+    add_meta_box('folder_meta', 'Informations sur le Dossier', 'show_metabox_folder', 'folder');
 }
 add_action('add_meta_boxes', 'add_metabox_folder');
 
-function show_metabox_folder($post) {
+function show_metabox_folder($post)
+{
 
     // Récupération des metas
     $roles_allowed = get_post_meta($post->ID, '_roles_allowed', true);
@@ -106,7 +110,7 @@ function show_metabox_folder($post) {
     ]);
 
     wp_nonce_field('save_folder_metabox', 'folder_metabox_nonce');
-    ?>
+?>
 
     <p>
         <strong>Rôles autorisés à consulter</strong><br>
@@ -117,8 +121,7 @@ function show_metabox_folder($post) {
                     type="checkbox"
                     name="roles_allowed[]"
                     value="<?php echo esc_attr($role); ?>"
-                    <?php checked(in_array($role, $roles_allowed)); ?>
-                >
+                    <?php checked(in_array($role, $roles_allowed)); ?>>
                 <?php echo esc_html(ucfirst($role)); ?>
             </label>
         <?php endforeach; ?>
@@ -130,8 +133,7 @@ function show_metabox_folder($post) {
             type="date"
             id="date_opening"
             name="date_opening"
-            value="<?php echo esc_attr($date_opening); ?>"
-        >
+            value="<?php echo esc_attr($date_opening); ?>">
     </p>
 
     <p>
@@ -140,8 +142,7 @@ function show_metabox_folder($post) {
             type="date"
             id="date_closing"
             name="date_closing"
-            value="<?php echo esc_attr($date_closing); ?>"
-        >
+            value="<?php echo esc_attr($date_closing); ?>">
     </p>
 
     <p>
@@ -150,8 +151,7 @@ function show_metabox_folder($post) {
             type="date"
             id="date_last_update"
             name="date_last_update"
-            value="<?php echo esc_attr($date_last_update); ?>"
-        >
+            value="<?php echo esc_attr($date_last_update); ?>">
     </p>
 
     <p>
@@ -159,8 +159,7 @@ function show_metabox_folder($post) {
         <textarea
             name="description"
             id="description"
-            style="width:100%; height:200px"
-        ><?php echo esc_textarea($description); ?></textarea>
+            style="width:100%; height:200px"><?php echo esc_textarea($description); ?></textarea>
     </p>
 
     <p>
@@ -173,8 +172,7 @@ function show_metabox_folder($post) {
                     type="checkbox"
                     name="linked_is[]"
                     value="<?php echo esc_attr($is->ID); ?>"
-                    <?php checked(in_array($is->ID, $linked_is)); ?>
-                >
+                    <?php checked(in_array($is->ID, $linked_is)); ?>>
                 <?php echo esc_html($is->post_title); ?>
             </label>
         <?php endforeach; ?>
@@ -190,23 +188,310 @@ function show_metabox_folder($post) {
                     type="checkbox"
                     name="linked_character[]"
                     value="<?php echo esc_attr($character->ID); ?>"
-                    <?php checked(in_array($character->ID, $linked_character)); ?>
-                >
+                    <?php checked(in_array($character->ID, $linked_character)); ?>>
                 <?php echo esc_html($character->post_title); ?>
             </label>
         <?php endforeach; ?>
     </div>
 
-    <?php
+<?php
+}
+
+add_action('add_meta_boxes', function () {
+    add_meta_box(
+        'folder_logs',
+        'Historique',
+        'render_folder_logs_metabox',
+        'folder',
+        'normal',
+        'default'
+    );
+});
+function render_folder_logs_metabox($post)
+{
+
+    $roles_allowed_logs = get_post_meta($post->ID, '_roles_allowed_logs', true);
+    $roles_allowed_logs = is_array($roles_allowed_logs) ? $roles_allowed_logs : [];
+
+    $logs = get_post_meta($post->ID, '_folder_logs', true);
+    $logs = is_array($logs) ? $logs : [];
+
+    $characters = get_posts([
+        'post_type' => 'character',
+        'numberposts' => -1,
+        'orderby' => 'title',
+        'order' => 'ASC'
+    ]);
+
+
+    $is_posts = get_posts([
+        'post_type' => 'is',
+        'numberposts' => -1,
+        'orderby' => 'title',
+        'order' => 'ASC'
+    ]);
+
+    wp_nonce_field('save_folder_logs', 'folder_logs_nonce');
+?>
+
+    <p>
+        <strong>Rôles autorisés à consulter l'historique</strong><br>
+        <?php foreach (ROLES_PASSIVE as $role): ?>
+            <label style="display:block;">
+                <input
+                    type="checkbox"
+                    name="roles_allowed_logs[]"
+                    value="<?php echo esc_attr($role); ?>"
+                    <?php checked(in_array($role, $roles_allowed_logs)); ?>>
+                <?php echo esc_html(ucfirst($role)); ?>
+            </label>
+        <?php endforeach; ?>
+    </p>
+
+    <table id="folder-log-table" style="width:100%;border-collapse:collapse; border:1px solid grey">
+        <thead>
+            <tr>
+                <th>Date / Heure</th>
+                <th>Action</th>
+                <th>Donnée</th>
+                <th>Entité</th>
+                <th>Auteur de l'Action</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <?php foreach ($logs as $i => $log): ?>
+
+                <tr>
+
+                    <td>
+                        <input type="datetime-local"
+                            name="logs[<?php echo $i ?>][datetime]"
+                            value="<?php echo esc_attr($log['datetime'] ?? '') ?>">
+                    </td>
+
+                    <td>
+                        <select name="logs[<?php echo $i ?>][action]">
+                            <option value="create" <?php selected($log['action'] ?? '', 'create') ?>>Créer</option>
+                            <option value="update" <?php selected($log['action'] ?? '', 'update') ?>>Modifier</option>
+                            <option value="delete" <?php selected($log['action'] ?? '', 'delete') ?>>Supprimer</option>
+                            <option value="join" <?php selected($log['action'] ?? '', 'join') ?>>Relier</option>
+                            <option value="unlink" <?php selected($log['action'] ?? '', 'unlink') ?>>Délier</option>
+                            <option value="read" <?php selected($log['action'] ?? '', 'read') ?>>Lire</option>
+                            <option value="close" <?php selected($log['action'] ?? '', 'close') ?>>Ferme</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <select name="logs[<?php echo $i ?>][target]">
+                            <option value="" <?php selected($log['target'] ?? '', '') ?>> </option>
+                            <option value="roles" <?php selected($log['target'] ?? '', 'roles') ?>>Roles</option>
+                            <option value="description" <?php selected($log['target'] ?? '', 'description') ?>>Description</option>
+                            <option value="is" <?php selected($log['target'] ?? '', 'is') ?>>IS</option>
+                            <option value="character" <?php selected($log['target'] ?? '', 'character') ?>>Personnage</option>
+                        </select>
+                    </td>
+
+                    <td class="target-field">
+
+                        <?php if (($log['target'] ?? '') === 'character'): ?>
+
+                            <select name="logs[<?php echo $i ?>][target_id]">
+                                <option value="">—</option>
+
+                                <?php foreach ($characters as $c): ?>
+                                    <option value="<?php echo $c->ID ?>"
+                                        <?php selected($log['target_id'] ?? '', $c->ID) ?>>
+                                        <?php echo esc_html($c->post_title) ?>
+                                    </option>
+                                <?php endforeach ?>
+
+                            </select>
+
+                        <?php elseif (($log['target'] ?? '') === 'is'): ?>
+
+                            <select name="logs[<?php echo $i ?>][target_id]">
+                                <option value="">—</option>
+
+                                <?php foreach ($is_posts as $is): ?>
+                                    <option value="<?php echo $is->ID ?>"
+                                        <?php selected($log['target_id'] ?? '', $is->ID) ?>>
+                                        <?php echo esc_html($is->post_title) ?>
+                                    </option>
+                                <?php endforeach ?>
+
+                            </select>
+
+                        <?php endif ?>
+
+                    </td>
+
+                    <td>
+                        <select name="logs[<?php echo $i ?>][character]">
+                            <option value="">—</option>
+                            <?php foreach ($characters as $c): ?>
+                                <option value="<?php echo $c->ID ?>"
+                                    <?php selected($log['character'] ?? '', $c->ID) ?>>
+                                    <?php echo esc_html($c->post_title) ?>
+                                </option>
+                            <?php endforeach ?>
+                        </select>
+                    </td>
+
+                    <td>
+                        <button type="button" class="remove-log button">✕</button>
+                    </td>
+
+                </tr>
+
+            <?php endforeach ?>
+
+        </tbody>
+    </table>
+
+    <p>
+        <button type="button" class="button" id="add-log">Ajouter une ligne</button>
+    </p>
+
+    <style>
+        #folder-log-table :is(input, select) {
+            width: 100%;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const table = document.querySelector('#folder-log-table tbody')
+            const addBtn = document.querySelector('#add-log')
+
+            addBtn.addEventListener('click', function() {
+
+                let index = table.children.length
+
+                let row = `
+<tr>
+
+<td>
+<input type="datetime-local" name="logs[${index}][datetime]">
+</td>
+
+<td>
+<select name="logs[${index}][action]">
+<option value="create">Créer</option>
+<option value="update">Modifier</option>
+<option value="delete">Supprimer</option>
+<option value="join">Relier</option>
+<option value="unlink">Délier</option>
+<option value="read">Lire</option>
+</select>
+</td>
+
+<td>
+<select name="logs[${index}][target]">
+<option value=""></option>
+<option value="roles">Roles</option>
+<option value="description">Description</option>
+<option value="is">IS</option>
+<option value="character">Personnage</option>
+</select>
+</td>
+
+<td class="target-field"></td>
+
+<td>
+<select name="logs[${index}][character]">
+<option value="">—</option>
+
+<?php foreach ($characters as $c): ?>
+<option value="<?php echo $c->ID ?>">
+<?php echo esc_js($c->post_title) ?>
+</option>
+<?php endforeach ?>
+
+</select>
+</td>
+
+<td>
+<button type="button" class="remove-log button">✕</button>
+</td>
+
+</tr>
+`
+
+                table.insertAdjacentHTML('beforeend', row)
+
+            })
+
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-log')) {
+                    e.target.closest('tr').remove()
+                }
+            })
+
+        })
+
+        function updateTargetField(row) {
+
+            const target = row.querySelector('[name*="[target]"]').value
+            const field = row.querySelector('.target-field')
+
+            if (target === "character") {
+
+                field.innerHTML = `<select name="${row.dataset.name}[target_id]">
+<option value="">—</option>
+<?php foreach ($characters as $c): ?>
+<option value="<?php echo $c->ID ?>">
+<?php echo esc_js($c->post_title) ?>
+</option>
+<?php endforeach ?>
+</select>`
+
+            } else if (target === "is") {
+
+                field.innerHTML = `<select name="${row.dataset.name}[target_id]">
+<option value="">—</option>
+<?php foreach ($is_posts as $is): ?>
+<option value="<?php echo $is->ID ?>">
+<?php echo esc_js($is->post_title) ?>
+</option>
+<?php endforeach ?>
+</select>`
+
+            } else {
+
+                field.innerHTML = ''
+
+            }
+
+        }
+
+        document.addEventListener('change', function(e) {
+
+            if (e.target.name.includes('[target]')) {
+
+                const row = e.target.closest('tr')
+                updateTargetField(row)
+
+            }
+
+        })
+    </script>
+
+<?php
 }
 
 
-function save_metabox_folder($post_id) {
+function save_metabox_folder($post_id)
+{
 
     // Sécurité
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
-    if (!isset($_POST['folder_metabox_nonce']) ||
-        !wp_verify_nonce($_POST['folder_metabox_nonce'], 'save_folder_metabox')) {
+    if (
+        !isset($_POST['folder_metabox_nonce']) ||
+        !wp_verify_nonce($_POST['folder_metabox_nonce'], 'save_folder_metabox')
+    ) {
         return;
     }
 
@@ -293,11 +578,46 @@ function save_metabox_folder($post_id) {
         }
     }
 
+    // LOGS
+    if (isset($_POST['roles_allowed_logs']) && is_array($_POST['roles_allowed_logs'])) {
+        $roles = array_map('sanitize_text_field', $_POST['roles_allowed_logs']);
+        update_post_meta($post_id, '_roles_allowed_logs', $roles);
+    } else {
+        delete_post_meta($post_id, '_roles_allowed_logs');
+    }
+
+    if (!isset($_POST['folder_logs_nonce'])) return;
+    if (!wp_verify_nonce($_POST['folder_logs_nonce'], 'save_folder_logs')) return;
+
+    if (!current_user_can('edit_post', $post_id)) return;
+
+    $logs = [];
+
+    if (!empty($_POST['logs'])) {
+
+        foreach ($_POST['logs'] as $log) {
+
+            $logs[] = [
+                'datetime' => sanitize_text_field($log['datetime']),
+                'action' => sanitize_text_field($log['action']),
+                'target' => sanitize_text_field($log['target']),
+                'target_id' => intval($log['target_id'] ?? 0),
+                'character' => intval($log['character'])
+            ];
+        }
+
+        usort($logs, function ($a, $b) {
+            return strtotime($a['datetime']) <=> strtotime($b['datetime']);
+        });
+    }
+
+    update_post_meta($post_id, '_folder_logs', $logs);
 }
 add_action('save_post_folder', 'save_metabox_folder');
 
 // Colonnes tableau backoffice
-function folder_admin_columns($columns) {
+function folder_admin_columns($columns)
+{
 
     $new_columns = [];
 
@@ -317,7 +637,8 @@ function folder_admin_columns($columns) {
 add_filter('manage_folder_posts_columns', 'folder_admin_columns');
 
 // Contenu des colonnes du tableau en backoffice
-function folder_admin_column_content($column, $post_id) {
+function folder_admin_column_content($column, $post_id)
+{
 
     if ($column === 'roles_allowed') {
 
@@ -343,11 +664,10 @@ function folder_admin_column_content($column, $post_id) {
                 $title = get_the_title($is_id);
                 $url   = get_edit_post_link($is_id);
 
-                $links[] = '<a href="'.esc_url($url).'">'.esc_html($title).'</a>';
+                $links[] = '<a href="' . esc_url($url) . '">' . esc_html($title) . '</a>';
             }
 
             echo implode(', ', $links);
-
         } else {
             echo '—';
         }
@@ -366,16 +686,14 @@ function folder_admin_column_content($column, $post_id) {
                 $title = get_the_title($character_id);
                 $url   = get_edit_post_link($character_id);
 
-                $links[] = '<a href="'.esc_url($url).'">'.esc_html($title).'</a>';
+                $links[] = '<a href="' . esc_url($url) . '">' . esc_html($title) . '</a>';
             }
 
             echo implode(', ', $links);
-
         } else {
             echo '—';
         }
     }
-
 }
 add_action('manage_folder_posts_custom_column', 'folder_admin_column_content', 10, 2);
 

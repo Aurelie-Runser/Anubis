@@ -28,13 +28,51 @@ $capacities_items = $meta['capacities'] ? array_map('trim', explode("\n", $meta[
 // Dossiers
 $linked_folders = get_post_meta($post_id, '_linked_folders', true);
 $linked_folders = is_array($linked_folders) ? $linked_folders : [];
+
+// Pour les LOGS
+$roles_allowed_logs = get_post_meta($post_id, '_roles_allowed_logs', true);
+$roles_allowed_logs = is_array($roles_allowed_logs) ? $roles_allowed_logs : [];
+
+$current_user = wp_get_current_user();
+$can_view_logs = !empty(array_intersect($current_user->roles, $roles_allowed_logs));
+$is_admin = !empty(array_intersect($current_user->roles, ['administrator', 'editor']));
+
+$logs = get_post_meta($post_id, '_is_logs', true);
+$logs = is_array($logs) ? $logs : [];
+
+$logs_console = [];
+
+if($is_admin || $can_view_logs){
+    foreach($logs as $log){
+        $datetime = !empty($log['datetime']) ? gmdate('Y-m-d\TH:i:s\Z', strtotime($log['datetime'])) : '';
+        $action = $ACTION_LABELS[$log['action']] ?? strtoupper($log['action']);
+
+        $target = strtoupper($log['target'] ?? '');
+
+        $author = !empty($log['character']) ? $log['character'] : '';
+
+        $line = $datetime
+            ? '<span class="log-date">'.$datetime.'</span> | '.$action
+                .($target ? ' '.$target : '')
+                .(!empty($target_ids) ? ' '.implode(' ', array_map(fn($id) => '<span class="log-id">'.$id.'</span>', $target_ids)) : '')
+                .($author ? ' BY '. '<span class="log-id">'.$author.'</span>' : '')
+            : '';
+
+        $logs_console[] = [
+            'line' => $line
+        ];
+    }
+}
+
+// END Pour les LOGS
+
 @endphp
 
 <a class="content-single-return" href="{{ get_post_type_archive_link( get_post_type() ) }}">Retourner à la liste des {!! get_post_type_object( get_post_type() )->label !!}</a>
 
 <article @php(post_class('h-entry'))>
     <div class="e-content">
-        <div class="content">
+        <div class="content"> 
             <header>
                 <h1 class="p-name">
                     I.S. Numéro&nbsp;:&nbsp;{!! display_meta($meta['id']) !!}
@@ -98,11 +136,6 @@ $linked_folders = is_array($linked_folders) ? $linked_folders : [];
                 </x-alert>
             @endif
 
-            <h2>Historique</h2>
-            <x-alert type="default">
-                En cours de dev. Ca arrive bientôt ;)
-            </x-alert>
-
         </div>
 
         <?php if ($meta['galerie']) :
@@ -125,5 +158,28 @@ $linked_folders = is_array($linked_folders) ? $linked_folders : [];
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
+    </div>
+
+    <div class="historique">
+        <h2>Historique</h2>
+        @if( $is_admin || ($can_view_logs && !empty($logs_console)) )
+            @if( !empty($logs_console) )
+            <div class="logs">
+                <ul>
+                    @foreach($logs_console as $log)
+                        <li>{!! $log['line'] !!}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @else
+            <x-alert type="warning">
+                Aucun historique renseigé. Les visiteurs verront un message de restriction.
+            </x-alert>
+            @endif
+        @else
+        <x-alert type="restricted">
+            Vous n'êtes pas autorisé à consulter cet historique.
+        </x-alert>
+        @endif
     </div>
 </article>
