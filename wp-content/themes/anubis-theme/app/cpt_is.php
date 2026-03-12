@@ -246,6 +246,8 @@ function render_is_logs_metabox($post)
     wp_nonce_field('save_is_logs', 'is_logs_nonce');
 ?>
 
+    <p><small>Si vide, affichera pour tout le monde le message "Pas droit d'accès".</small></p>
+
     <p>
         <strong>Rôles autorisés à consulter l'historique</strong><br>
         <?php foreach (ROLES_PASSIVE as $role): ?>
@@ -292,13 +294,14 @@ function render_is_logs_metabox($post)
 
                     <td>
                         <select name="logs[<?php echo $i ?>][target]">
-                            <option value="" <?php selected($log['target'] ?? '', '') ?>> </option>
+                            <option value="" <?php selected($log['target'] ?? '', '') ?>>Cet I.S.</option>
                             <option value="roles" <?php selected($log['target'] ?? '', 'roles') ?>>Roles</option>
                             <option value="etat" <?php selected($log['target'] ?? '', 'etat') ?>>État</option>
-                            <option value="categories" <?php selected($log['target'] ?? '', 'categories') ?>>Niveau de dangerosité</option>
+                            <option value="danger_level" <?php selected($log['target'] ?? '', 'danger_level') ?>>Niveau de dangerosité</option>
                             <option value="date_catch" <?php selected($log['target'] ?? '', 'date_catch') ?>>Dernière date de capture</option>
                             <option value="capcities" <?php selected($log['target'] ?? '', 'capcities') ?>>Capacités</option>
                             <option value="description" <?php selected($log['target'] ?? '', 'description') ?>>Description</option>
+                            <option value="gallery" <?php selected($log['target'] ?? '', 'gallery') ?>>Galerie</option>
                         </select>
                     </td>
 
@@ -362,13 +365,14 @@ function render_is_logs_metabox($post)
 
 <td>
 <select name="logs[${index}][target]">
-<option value=""></option>
-<option value="roles"roles">Roles</option>
-<option value="etat"etat">État</option>
-<option value="categories"categories">Niveau de dangerosité</option>
-<option value="date_catch"date_catch">Dernière date de capture</option>
-<option value="capcities"capcities">Capacités</option>
-<option value="description"description">Description</option>
+<option value="">Cet I.S.</option>
+<option value="roles">Roles</option>
+<option value="etat">État</option>
+<option value="danger_level">Niveau de dangerosité</option>
+<option value="date_catch">Dernière date de capture</option>
+<option value="capcities">Capacités</option>
+<option value="description">Description</option>
+<option value="gallery">Gallerie</option>
 </select>
 </td>
 
@@ -404,40 +408,6 @@ function render_is_logs_metabox($post)
 
         })
 
-        function updateTargetField(row) {
-
-            const target = row.querySelector('[name*="[target]"]').value
-            const field = row.querySelector('.target-field')
-
-            if (target === "character") {
-
-                field.innerHTML = `<select name="${row.dataset.name}[target_id]">
-<option value="">—</option>
-<?php foreach ($characters as $c): ?>
-<option value="<?php echo $c->ID ?>">
-<?php echo esc_js($c->post_title) ?>
-</option>
-<?php endforeach ?>
-</select>`
-
-            } else {
-
-                field.innerHTML = ''
-
-            }
-
-        }
-
-        document.addEventListener('change', function(e) {
-
-            if (e.target.name.includes('[target]')) {
-
-                const row = e.target.closest('tr')
-                updateTargetField(row)
-
-            }
-
-        })
     </script>
 
 <?php

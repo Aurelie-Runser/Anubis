@@ -234,6 +234,8 @@ function render_folder_logs_metabox($post)
     wp_nonce_field('save_folder_logs', 'folder_logs_nonce');
 ?>
 
+    <p><small>Si vide, affichera pour tout le monde le message "Pas droit d'accès".</small></p>
+
     <p>
         <strong>Rôles autorisés à consulter l'historique</strong><br>
         <?php foreach (ROLES_PASSIVE as $role): ?>
@@ -285,7 +287,7 @@ function render_folder_logs_metabox($post)
 
                     <td>
                         <select name="logs[<?php echo $i ?>][target]">
-                            <option value="" <?php selected($log['target'] ?? '', '') ?>> </option>
+                            <option value="" <?php selected($log['target'] ?? '', '') ?>>Ce Dossier</option>
                             <option value="roles" <?php selected($log['target'] ?? '', 'roles') ?>>Roles</option>
                             <option value="description" <?php selected($log['target'] ?? '', 'description') ?>>Description</option>
                             <option value="is" <?php selected($log['target'] ?? '', 'is') ?>>IS</option>
@@ -390,7 +392,7 @@ function render_folder_logs_metabox($post)
 
 <td>
 <select name="logs[${index}][target]">
-<option value=""></option>
+<option value="">Ce Dossier</option>
 <option value="roles">Roles</option>
 <option value="description">Description</option>
 <option value="is">IS</option>
