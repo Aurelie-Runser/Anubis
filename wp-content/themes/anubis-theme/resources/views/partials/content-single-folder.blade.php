@@ -21,6 +21,15 @@ $linked_is = is_array($linked_is) ? $linked_is : [];
 $linked_character = get_post_meta($post_id, '_linked_character', true);
 $linked_character = is_array($linked_character) ? $linked_character : [];
 
+$rapports = get_posts([
+    'post_type'      => 'rapport',
+    'numberposts'    => -1,
+    'meta_key'       => '_linked_folder',
+    'meta_value'     => $post_id,
+    'orderby'        => 'date',
+    'order'          => 'DESC',
+]);
+
 // Pour les LOGS
 $roles_allowed_logs = get_post_meta($post_id, '_roles_allowed_logs', true);
 $roles_allowed_logs = is_array($roles_allowed_logs) ? $roles_allowed_logs : [];
@@ -135,9 +144,21 @@ if($is_admin || $can_view_logs){
                 </div>
                 <div>
                     <h2>Rapports&nbsp;:</h2>
-                    <x-alert type="default">
-                        Aucun Rapport associé à ce {!! get_post_type_object( get_post_type() )->labels->singular_name !!}.
-                    </x-alert>
+                    @if(!empty($rapports))
+                        <ul class="list">
+                            @foreach($rapports as $rapport)
+                                <li>
+                                    <a href="{{ get_permalink($rapport->ID) }}">
+                                        {{ get_the_title($rapport->ID) }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <x-alert type="default">
+                            Aucun Rapport associé à ce {!! get_post_type_object( get_post_type() )->labels->singular_name !!}.
+                        </x-alert>
+                    @endif
                 </div>
             </div>
 

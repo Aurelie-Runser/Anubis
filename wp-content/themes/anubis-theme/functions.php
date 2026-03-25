@@ -52,7 +52,7 @@ Application::configure()
 collect(['setup', 'helpers', 'dashboard-widgets',
     'login_redirect', 'is_user_allowed_for_content',
     'custom_roles', 'custom_pagination',
-    'cpt_character', 'cpt_is', 'cpt_folder', 'cpt_messages'
+    'cpt_character', 'cpt_is', 'cpt_folder', 'cpt_rapport', 'cpt_messages'
 ])
     ->each(function ($file) {
         if (! locate_template($file = "app/{$file}.php", true, true)) {
