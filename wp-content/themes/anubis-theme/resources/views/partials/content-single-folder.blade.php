@@ -25,10 +25,16 @@ $linked_character = is_array($linked_character) ? $linked_character : [];
 $rapports = get_posts([
     'post_type'      => 'rapport',
     'numberposts'    => -1,
-    'meta_key'       => '_linked_folder',
-    'meta_value'     => $post_id,
-    'orderby'        => 'date',
-    'order'          => 'DESC',
+    'meta_query'     => [
+        [
+            'key'   => '_linked_folder',
+            'value' => $post_id,
+        ]
+    ],
+    'meta_key'       => '_date_rapport',
+    'orderby'        => 'meta_value',
+    'order'          => 'ASC',
+    'meta_type'      => 'DATE',
 ]);
 
 // Pour les LOGS

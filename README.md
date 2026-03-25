@@ -7,8 +7,8 @@ Fonctionnalités :
 - [X] DOSSIER
 	- [X] FICHE
 	- [X] LISTE
-- [ ] RAPPORT
-	- [ ] FICHE
+- [X] RAPPORT
+	- [X] FICHE
 
 - [X] MESSAGES
 	- [X] FICHE

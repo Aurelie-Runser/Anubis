@@ -285,50 +285,59 @@ function save_metabox_rapport($post_id)
     } else {
         delete_post_meta($post_id, '_rapport_steps');
     }
+
+    update_rapport_title($post_id);
 }
 add_action('save_post_rapport', 'save_metabox_rapport');
 
 // update du title
-add_filter('wp_insert_post_data', function ($data, $postarr) {
+function update_rapport_title($post_id)
+{
+    // éviter boucle infinie
+    remove_action('save_post_rapport', 'save_metabox_rapport');
 
-    if ($data['post_type'] === 'rapport') {
+    $linked_folder = get_post_meta($post_id, '_linked_folder', true);
+    $date_rapport  = get_post_meta($post_id, '_date_rapport', true);
+    $author_id     = get_post_meta($post_id, '_rapport_author', true);
 
-        // metas
-        $linked_folder = get_post_meta($postarr['ID'], '_linked_folder', true);
-        $date_rapport  = get_post_meta($postarr['ID'], '_date_rapport', true);
-        $date_rapport  = str_replace('-', '', $date_rapport);
+    $date_rapport = str_replace('-', '', $date_rapport);
 
-        $author_character_id = get_post_meta($postarr['ID'], '_rapport_author', true);
+    $author_identifier = '';
 
-        // 🔥 récupérer le BON identifiant auteur
-        $author_identifier = '';
+    if ($author_id) {
+        $manual_id   = get_post_meta($author_id, '_id', true);
+        $linked_user = get_post_meta($author_id, '_linked_user', true);
 
-        if ($author_character_id) {
-
-            $manual_id   = get_post_meta($author_character_id, '_id', true);
-            $linked_user = get_post_meta($author_character_id, '_linked_user', true);
-
-            if (!empty($manual_id)) {
-                $author_identifier = $manual_id;
-            } elseif (!empty($linked_user)) {
-                $user = get_userdata($linked_user);
-                $author_identifier = $user ? $user->user_login : '';
-            }
+        if (!empty($manual_id)) {
+            $author_identifier = $manual_id;
+        } elseif (!empty($linked_user)) {
+            $user = get_userdata($linked_user);
+            $author_identifier = $user ? $user->user_login : '';
         }
-
-        // construire le titre
-        $title_parts = [];
-
-        if ($linked_folder)      $title_parts[] = get_post_meta($linked_folder, '_id', true);
-        if ($date_rapport)       $title_parts[] = $date_rapport;
-        if ($author_identifier)  $title_parts[] = $author_identifier;
-
-        $data['post_title'] = implode('-', $title_parts);
-        $data['post_name']  = sanitize_title($data['post_title']);
     }
 
-    return $data;
-}, 10, 2);
+    $folder_identifier = '';
+    if ($linked_folder) {
+        $folder_identifier = get_post_meta($linked_folder, '_id', true);
+    }
+
+    $title_parts = array_filter([
+        $folder_identifier,
+        $date_rapport,
+        $author_identifier
+    ]);
+
+    $title = implode('-', $title_parts);
+
+    wp_update_post([
+        'ID'         => $post_id,
+        'post_title' => $title,
+        'post_name'  => sanitize_title($title),
+    ]);
+
+    // remettre le hook
+    add_action('save_post_rapport', 'save_metabox_rapport');
+}
 
 // Colonnes tableau backoffice
 function rapport_admin_columns($columns)
