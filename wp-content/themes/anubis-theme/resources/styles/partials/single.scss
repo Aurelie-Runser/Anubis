@@ -32,6 +32,19 @@
             
             .list {
                 padding-left: calc(var(--wp--preset--font-size--base) * 2);
+
+                &.list-rapport-steps {
+
+                    li {
+                        > span {
+                            display: flex;
+                        }
+                        
+                        &:not(:last-child) {
+                            margin-bottom: var(--wp--preset--spacing--sm);
+                        }
+                    }
+                }
             }
 
             .no-informed{

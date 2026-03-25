@@ -12,9 +12,11 @@ $meta = [
     'linked_folder' => get_post_meta($post_id, '_linked_folder', true),
     'rapport_author' => get_post_meta($post_id, '_rapport_author', true),
 ];
-
+    
 $author_id = explode('-', get_the_title());
 $author_id = $author_id[ count($author_id)-1 ];
+
+$steps = get_post_meta($post_id, '_rapport_steps', true);
 
 @endphp
 
@@ -33,6 +35,19 @@ $author_id = $author_id[ count($author_id)-1 ];
                 <li>Jour des événements&nbsp;:&nbsp;<span>{!! display_meta(format_date_fr($meta['date_rapport'])) !!}</span></li>
                 <li>Auteur&nbsp;:&nbsp;<span>{!! display_meta( $author_id . ' - ' . get_the_title($meta['rapport_author'])) !!}</span></li>
             </ul>
+
+            <h2>Déroulé</h2>
+            @if(!empty($steps))
+                <ul class="list list-rapport-steps">
+                    @foreach($steps as $step)
+                        <li>
+                            <span>
+                                <strong>{{ $step['time'] }}</strong>&nbsp;:&nbsp;<span>{!! $step['content'] !!}</span>
+                            </span>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
 
         </div>
 

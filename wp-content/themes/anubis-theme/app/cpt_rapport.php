@@ -87,6 +87,9 @@ function show_metabox_rapport($post)
         'order' => 'ASC',
     ]);
 
+    $steps = get_post_meta($post->ID, '_rapport_steps', true);
+    $steps = is_array($steps) ? $steps : [];
+
     wp_nonce_field('save_rapport_metabox', 'rapport_metabox_nonce');
 ?>
 
@@ -99,7 +102,7 @@ function show_metabox_rapport($post)
             value="<?php echo esc_attr($date_rapport); ?>">
     </p>
 
-    
+
     <p>
         <strong>Auteur de ce rapport</strong>
     </p>
@@ -132,6 +135,70 @@ function show_metabox_rapport($post)
         <?php endforeach; ?>
     </div>
 
+    <p>
+        <strong>Etapes</strong>
+        <br/><span class="description">(Heure / Situation)</span>
+    </p>
+
+    <div id="steps-container">
+        <?php foreach ($steps as $index => $step): ?>
+            <div class="step-item">
+                <input type="time" name="steps[<?php echo $index; ?>][time]" value="<?php echo esc_attr($step['time']); ?>" />
+                <input type="text" name="steps[<?php echo $index; ?>][content]" value="<?php echo esc_attr($step['content']); ?>" placeholder="Situation..." />
+                <button type="button" class="button remove-step">Supprimer</button>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <button type="button" class="button button-primary" id="add-step">Ajouter une étape</button>
+
+    <style>
+        #steps-container {
+            padding: 5px;
+            border: 1px solid grey;
+        }
+
+        .step-item {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .step-item input[type=text] {
+            width: 100%;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const container = document.getElementById('steps-container');
+            const addBtn = document.getElementById('add-step');
+
+            let index = <?php echo count($steps); ?>;
+
+            addBtn.addEventListener('click', function() {
+                const div = document.createElement('div');
+                div.classList.add('step-item');
+
+                div.innerHTML = `
+            <input type="time" name="steps[${index}][time]" />
+            <input type="text" name="steps[${index}][content]" placeholder="Description..." />
+            <button type="button" class="button remove-step">Supprimer</button>
+        `;
+
+                container.appendChild(div);
+                index++;
+            });
+
+            container.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-step')) {
+                    e.target.closest('.step-item').remove();
+                }
+            });
+
+        });
+    </script>
+
 <?php
 }
 
@@ -160,6 +227,26 @@ function save_metabox_rapport($post_id)
 
     if (isset($_POST['linked_folder'])) {
         update_post_meta($post_id, '_linked_folder', sanitize_text_field($_POST['linked_folder']));
+    }
+
+    if (isset($_POST['steps']) && is_array($_POST['steps'])) {
+
+        $clean_steps = [];
+
+        foreach ($_POST['steps'] as $step) {
+
+            if (empty($step['time']) && empty($step['content'])) continue;
+
+            $clean_steps[] = [
+                'time' => sanitize_text_field($step['time']),
+                'content' => sanitize_text_field($step['content']),
+            ];
+        }
+
+        update_post_meta($post_id, '_rapport_steps', $clean_steps);
+
+    } else {
+        delete_post_meta($post_id, '_rapport_steps');
     }
 }
 add_action('save_post_rapport', 'save_metabox_rapport');
