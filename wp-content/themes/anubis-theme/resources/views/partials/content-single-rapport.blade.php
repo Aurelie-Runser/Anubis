@@ -15,7 +15,7 @@ $meta = [
 
 @endphp
 
-<a class="content-single-return" href="{{ get_permalink( $meta['linked_folder'] ) }}">Retourner au Dossier N°{!! $meta['linked_folder'] !!}</a>
+<a class="content-single-return" href="{{ get_permalink( $meta['linked_folder'] ) }}">Retourner au Dossier N°{!! get_post_meta($meta['linked_folder'], '_id', true) !!}</a>
 
 <article @php(post_class('h-entry'))>
     <div class="e-content">

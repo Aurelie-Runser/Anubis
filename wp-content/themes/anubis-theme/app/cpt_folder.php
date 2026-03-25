@@ -86,6 +86,8 @@ function show_metabox_folder($post)
     $roles_allowed = get_post_meta($post->ID, '_roles_allowed', true);
     $roles_allowed = is_array($roles_allowed) ? $roles_allowed : [];
 
+    $id = get_post_meta($post->ID, '_id', true);
+
     $date_opening = get_post_meta($post->ID, '_date_opening', true);
     $date_closing    = get_post_meta($post->ID, '_date_closing', true);
     $date_last_update    = get_post_meta($post->ID, '_date_last_update', true);
@@ -111,6 +113,17 @@ function show_metabox_folder($post)
 
     wp_nonce_field('save_folder_metabox', 'folder_metabox_nonce');
 ?>
+
+    <p>
+        <label for="id"><strong>Identidiant</strong></label><br>
+        <input
+            type="number"
+            id="id"
+            name="id"
+            min="0"
+            max="9999"
+            value="<?php echo esc_attr($id); ?>">
+    </p>
 
     <p>
         <strong>Rôles autorisés à consulter</strong><br>
@@ -513,6 +526,10 @@ function save_metabox_folder($post_id)
         delete_post_meta($post_id, '_roles_allowed');
     }
 
+    if (isset($_POST['id'])) {
+        update_post_meta($post_id, '_id', sanitize_text_field($_POST['id']));
+    }
+
     if (isset($_POST['date_opening'])) {
         update_post_meta($post_id, '_date_opening', sanitize_text_field($_POST['date_opening']));
     }
@@ -633,6 +650,7 @@ function folder_admin_columns($columns)
         $new_columns[$key] = $label;
 
         if ($key === 'title') {
+            $new_columns['id'] = 'Identifiant';
             $new_columns['linked_is'] = 'IS associés';
             $new_columns['linked_character'] = 'Personnages associés';
             $new_columns['roles_allowed'] = 'Rôles autorisés';
@@ -646,6 +664,13 @@ add_filter('manage_folder_posts_columns', 'folder_admin_columns');
 // Contenu des colonnes du tableau en backoffice
 function folder_admin_column_content($column, $post_id)
 {
+
+    if ($column === 'id') {
+
+        $id = get_post_meta($post_id, '_id', true);
+
+        echo $id ? esc_html($id) : '—';
+    }
 
     if ($column === 'roles_allowed') {
 

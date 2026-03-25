@@ -55,6 +55,7 @@ add_action('init', function () {
     );
 });
 
+
 /**
  * Metabox complète pour le CPT "Rapport"
  */
@@ -166,23 +167,40 @@ add_action('save_post_rapport', 'save_metabox_rapport');
 // update du title
 add_filter('wp_insert_post_data', function ($data, $postarr) {
 
-    // Vérifier le type de post
     if ($data['post_type'] === 'rapport') {
 
-        // Récupérer les metas
+        // metas
         $linked_folder = get_post_meta($postarr['ID'], '_linked_folder', true);
         $date_publish  = get_post_meta($postarr['ID'], '_date_publish', true);
         $date_publish  = str_replace('-', '', $date_publish);
-        $rapport_author        = get_post_meta($postarr['ID'], '_rapport_author', true);
 
-        // Construire le titre
+        $author_character_id = get_post_meta($postarr['ID'], '_rapport_author', true);
+
+        // 🔥 récupérer le BON identifiant auteur
+        $author_identifier = '';
+
+        if ($author_character_id) {
+
+            $manual_id   = get_post_meta($author_character_id, '_id', true);
+            $linked_user = get_post_meta($author_character_id, '_linked_user', true);
+
+            if (!empty($manual_id)) {
+                $author_identifier = $manual_id;
+            } elseif (!empty($linked_user)) {
+                $user = get_userdata($linked_user);
+                $author_identifier = $user ? $user->user_login : '';
+            }
+        }
+
+        // construire le titre
         $title_parts = [];
-        if ($linked_folder)     $title_parts[] = $linked_folder;
-        if ($date_publish)      $title_parts[] = $date_publish;
-        if ($rapport_author)    $title_parts[] = $rapport_author;
+
+        if ($linked_folder)      $title_parts[] = get_post_meta($linked_folder, '_id', true);
+        if ($date_publish)       $title_parts[] = $date_publish;
+        if ($author_identifier)  $title_parts[] = $author_identifier;
 
         $data['post_title'] = implode('-', $title_parts);
-        $data['post_name']  = sanitize_title($data['post_title']); // slug
+        $data['post_name']  = sanitize_title($data['post_title']);
     }
 
     return $data;
