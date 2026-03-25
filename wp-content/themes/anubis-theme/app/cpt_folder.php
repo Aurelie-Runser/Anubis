@@ -306,7 +306,7 @@ function render_folder_logs_metabox($post)
                             <option value="summary" <?php selected($log['target'] ?? '', 'summary') ?>>Résumé</option>
                             <option value="is" <?php selected($log['target'] ?? '', 'is') ?>>IS</option>
                             <option value="character" <?php selected($log['target'] ?? '', 'character') ?>>Personnage</option>
-                            <option value="one rapport" <?php selected($log['target'] ?? '', 'one rapport') ?>>Rapport</option>
+                            <option value="rapport" <?php selected($log['target'] ?? '', 'rapport') ?>>Rapport</option>
                         </select>
                     </td>
 
@@ -413,7 +413,7 @@ function render_folder_logs_metabox($post)
 <option value="summary">Résumé</option>
 <option value="is">IS</option>
 <option value="character">Personnage</option>
-<option value="one rapport">Rapport</option>
+<option value="rapport">Rapport</option>
 </select>
 </td>
 
