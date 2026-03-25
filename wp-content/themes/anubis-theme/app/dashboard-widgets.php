@@ -131,7 +131,7 @@ add_action('wp_dashboard_setup', function () {
                 </video>
             </li>
             <li>
-                <strong>Ajouter d'un Historique aux Dossiers et I.S.</strong><br>
+                <strong>Ajouter un Historique aux Dossiers et I.S.</strong><br>
                 <video width="100%" height="200" controls>
                     <source src="<?php echo esc_url(home_url('?private_video=add-logs.mp4')); ?>" type="video/mp4">
                 </video>
