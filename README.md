@@ -10,9 +10,9 @@ Fonctionnalités :
 - [ ] RAPPORT
 	- [ ] FICHE
 
-- [ ] MESSAGES
-	- [ ] FICHE
-	- [ ] LISTE
+- [X] MESSAGES
+	- [X] FICHE
+	- [X] LISTE
 
 - [ ] Generation de lorem (is/dossier inaccessible pour remplir l'intrrface)
 
