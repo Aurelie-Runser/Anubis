@@ -99,6 +99,89 @@ function show_metabox_message($post)
         <?php endforeach; ?>
     </div>
 
+    <p><strong>Messages</strong></p>
+
+<div id="messages-wrapper">
+    <?php foreach ($messages as $index => $msg): ?>
+        <div class="message-item" style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+            
+            <label>Quand a été envoyer le message (-7 à 0)</label>
+            <input type="number" name="messages[<?php echo $index; ?>][day_offset]" min="-7" max="0"
+                value="<?php echo esc_attr($msg['day_offset']); ?>">
+
+            <br/>
+            <label>Heure</label>
+            <input type="time" name="messages[<?php echo $index; ?>][time]"
+            value="<?php echo esc_attr($msg['time']); ?>">
+            
+            <br/>
+            <label>Envoyeur</label>
+            <select name="messages[<?php echo $index; ?>][sender]">
+                <option value="character_1" <?php selected($msg['sender'], 'character_1'); ?>>Personnage 1</option>
+                <option value="character_2" <?php selected($msg['sender'], 'character_2'); ?>>Personnage 2</option>
+            </select>
+            <br/>
+
+            <label>Contenu du message</label>
+            <textarea name="messages[<?php echo $index; ?>][content]" style="width:100%;">
+                <?php echo esc_textarea($msg['content']); ?>
+            </textarea>
+
+            <button type="button" class="remove-message">Supprimer</button>
+        </div>
+    <?php endforeach; ?>
+</div>
+
+<button type="button" id="add-message">+ Ajouter un message</button>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    let index = <?php echo count($messages); ?>;
+
+    document.getElementById('add-message').addEventListener('click', function() {
+
+        const wrapper = document.getElementById('messages-wrapper');
+
+        const html = `
+        <div class="message-item" style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+            
+            <label>Quand a été envoyer le message (-7 à 0)</label>
+            <input type="number" name="messages[${index}][day_offset]" min="-7" max="0">
+
+            <br/>
+
+            <label>Heure</label>
+            <input type="time" name="messages[${index}][time]">
+
+            <br/>
+
+            <label>Envoyeur</label>
+            <select name="messages[${index}][sender]">
+                <option value="character_1">Personnage 1</option>
+                <option value="character_2">Personnage 2</option>
+            </select>
+
+            <br/>
+
+            <label>Contenu du message</label>
+            <textarea name="messages[${index}][content]" style="width:100%;"></textarea>
+
+            <button type="button" class="remove-message">Supprimer</button>
+        </div>`;
+
+        wrapper.insertAdjacentHTML('beforeend', html);
+        index++;
+    });
+
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-message')) {
+            e.target.closest('.message-item').remove();
+        }
+    });
+
+});
+</script>
 <?php
 }
 
@@ -128,6 +211,26 @@ function save_metabox_message($post_id)
 
     if (isset($_POST['character_2'])) {
         update_post_meta($post_id, '_character_2', sanitize_textarea_field($_POST['character_2']));
+    }
+
+    if (isset($_POST['messages']) && is_array($_POST['messages'])) {
+
+        $clean_messages = [];
+
+        foreach ($_POST['messages'] as $msg) {
+
+            $clean_messages[] = [
+                'day_offset' => intval($msg['day_offset']),
+                'time'       => sanitize_text_field($msg['time']),
+                'sender'     => sanitize_text_field($msg['sender']),
+                'content'    => sanitize_textarea_field($msg['content']),
+            ];
+        }
+
+        update_post_meta($post_id, '_messages', $clean_messages);
+
+    } else {
+        delete_post_meta($post_id, '_messages');
     }
 
 }

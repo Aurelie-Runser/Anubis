@@ -61,6 +61,11 @@
       "units": ["px", "%", "em", "rem", "vw", "vh"],
       "spacingSizes": [
         {
+          "name": "Très très Petit",
+          "size": "5px",
+          "slug": "xxs"
+        },
+        {
           "name": "Très Petit",
           "size": "10px",
           "slug": "xs"

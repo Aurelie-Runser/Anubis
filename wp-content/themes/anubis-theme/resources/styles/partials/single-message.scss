@@ -1,0 +1,85 @@
+.single.single-message {
+    height: 100dvh;
+
+    #app,
+    .main {
+        height: 100%;
+
+        @media screen and (min-width: 1000px) {
+            height: 100% !important;
+        }
+
+        .alert {
+            margin-bottom: var(--wp--preset--spacing--sm);
+        }
+
+        .message {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            
+            .zone_messages {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                overflow-y: scroll;
+                background: var(--wp--preset--color--grey-light);
+                padding: var(--wp--preset--spacing--sm);
+                padding-right: var(--wp--preset--spacing--md);
+                border-radius: var(--wp--preset--spacing--sm);
+
+                .message-send {
+                max-width: 650px;
+                width: 75%;
+
+                &:first-child {
+                    margin-top: auto;
+                }
+
+                &:not(:last-child) {
+                    margin-bottom: var(--wp--preset--spacing--sm);
+                }
+
+                .message-content {
+                    width: fit-content;
+                    background: var(--wp--preset--color--white);
+                    padding: var(--wp--preset--spacing--xs);
+                    border-radius: var(--wp--preset--spacing--xxs);
+                    border-bottom-left-radius: 0;
+                    margin-bottom: var(--wp--preset--spacing--xxs);
+                    font-size: var(--wp--preset--font-size--base);
+
+                    p {
+                    margin: 0;
+                    }
+                }
+
+                .message-time {
+                    font-size: var(--wp--preset--font-size--sm);
+                }
+
+                &.by--me {
+                    margin-left: auto;
+                    text-align: end;
+
+                    .message-content {
+                    margin-left: auto;
+                    text-align: end;
+                    border-bottom-left-radius: var(--wp--preset--spacing--xxs);
+                    border-bottom-right-radius: 0;
+                    }
+                }
+                }
+            }
+
+            .message-input {
+                margin-top: var(--wp--preset--spacing--md);
+            }
+        }
+    }
+
+  
+    #app {
+        height: calc(100% - 71.6px);
+    }
+}
