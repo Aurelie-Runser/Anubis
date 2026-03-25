@@ -38,7 +38,39 @@ if ($linked_user) {
   $character_identifiant = $manual_id ?: '—';
 }
 
+
+$messages = get_post_meta($post_id, '_messages', true);
+$messages = is_array($messages) ? $messages : [];
+
+$latest_date = '';
+
+if (!empty($messages)) {
+
+    // On calcule un timestamp pour chaque message
+    $timestamps = array_map(function($msg) {
+        $day_offset = isset($msg['day_offset']) ? intval($msg['day_offset']) : 0;
+        $time       = $msg['time'] ?? '00:00';
+        
+        // Date actuelle + day_offset
+        $date = new DateTime();
+        $date->modify($day_offset . ' days');
+        // Ajouter l'heure
+        [$h, $m] = explode(':', $time);
+        $date->setTime(intval($h), intval($m));
+        return $date;
+    }, $messages);
+
+    // Tri décroissant pour prendre le dernier
+    usort($timestamps, function($a, $b) {
+        return $b <=> $a;
+    });
+
+    $latest_date = $timestamps[0]->format('Y/m/d');
+}
+
+
 $classes = 'archive-item';
+
 @endphp
 
 <tr @php(post_class($classes))>
@@ -47,7 +79,7 @@ $classes = 'archive-item';
   </th>
 
   <th>
-    date bidule
+    {!! $latest_date !!}
   </th>
 
 

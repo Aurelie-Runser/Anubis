@@ -7,16 +7,16 @@ function cpt__message()
         'name'                => _x('Messagerie', 'Post Type General Name'),
         'singular_name'       => _x('Message', 'Post Type Singular Name'),
         'menu_name'           => __('Messages'),
-        'all_items'           => __('Tous les Messages'),
-        'view_item'           => __('Voir les Messages'),
-        'add_new_item'        => __('Ajouter un nouveau Message'),
+        'all_items'           => __('Tous les Échanges'),
+        'view_item'           => __('Voir les Échanges'),
+        'add_new_item'        => __('Ajouter un nouvel Échange'),
         'add_new'             => __('Ajouter'),
-        'edit_item'           => __('Editer le Message'),
-        'update_item'         => __('Modifier le Message'),
-        'search_items'        => __('Rechercher un Message'),
+        'edit_item'           => __('Editer l\'Échange'),
+        'update_item'         => __('Modifier l\'Échange'),
+        'search_items'        => __('Rechercher un Échange'),
         'not_found'           => __('Non trouvé'),
         'not_found_in_trash'  => __('Non trouvé dans la corbeille'),
-        'view_items'          => __('Voir la liste des Message'),
+        'view_items'          => __('Voir la liste des Échanges'),
     );
 
     $args = array(
