@@ -14,6 +14,8 @@ Fonctionnalités :
 	- [X] FICHE
 	- [X] LISTE
 
+- [X] video dans IS/RAPPORT
+
 - [ ] Generation de lorem (is/dossier inaccessible pour remplir l'intrrface)
 
 - [X] PAGE PROFIL

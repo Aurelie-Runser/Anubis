@@ -142,17 +142,30 @@ if($is_admin || $can_view_logs){
             $ids = explode(',', $meta['galerie']);
         ?>
             <div class="gallery">
-                <?php foreach ($ids as $img_id) : 
-                    $description = get_post_field('post_content', $img_id);
+                <?php foreach ($ids as $media_id) : 
+                    $description = get_post_field('post_content', $media_id);
+                    $mime_type = get_post_mime_type($media_id);
                 ?>
                     <figure>
                         <?php 
-                        echo wp_get_attachment_image(
-                            $img_id, 
-                            'medium', 
-                            false, 
-                            ['alt' => esc_attr($description)]
-                        ); 
+                        if (str_starts_with($mime_type, 'image/')) {
+                            // C'est une image
+                            echo wp_get_attachment_image(
+                                $media_id, 
+                                'medium', 
+                                false, 
+                                ['alt' => esc_attr($description)]
+                            ); 
+                        } elseif (str_starts_with($mime_type, 'video/')) {
+                            // C'est une vidéo
+                            $video_url = wp_get_attachment_url($media_id);
+                            ?>
+                            <video controls width="500">
+                                <source src="<?= esc_url($video_url) ?>" type="<?= esc_attr($mime_type) ?>">
+                                Votre navigateur ne supporte pas la vidéo.
+                            </video>
+                            <?php
+                        }
                         ?>
                     </figure>
                 <?php endforeach; ?>

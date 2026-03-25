@@ -203,11 +203,19 @@ function show_metabox_is($post)
 
     <div id="gallery_preview" style="margin-top:10px;">
         <?php
-        foreach ($galerie_ids as $img_id) {
-            $img = wp_get_attachment_image($img_id, 'thumbnail');
-            if ($img) {
-                echo '<span style="margin-right:5px; display:inline-block;">' . $img . '</span>';
+        foreach ($galerie_ids as $media_id) {
+            $mime_type = get_post_mime_type($media_id);
+
+            if (str_starts_with($mime_type, 'image/')) {
+                $preview = wp_get_attachment_image($media_id, 'thumbnail');
+            } elseif (str_starts_with($mime_type, 'video/')) {
+                $video_url = wp_get_attachment_url($media_id);
+                $preview = '<video src="' . esc_url($video_url) . '" height="150" controls muted></video>';
+            } else {
+                continue; // ignorer les autres types
             }
+
+            echo '<span style="margin-right:5px; display:inline-block;">' . $preview . '</span>';
         }
         ?>
     </div>
@@ -407,7 +415,6 @@ function render_is_logs_metabox($post)
             })
 
         })
-
     </script>
 
 <?php
