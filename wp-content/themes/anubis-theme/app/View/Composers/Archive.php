@@ -8,6 +8,7 @@ class Archive extends Composer
 {
     protected static $views = [
         'archive',
+        'archive-*',
     ];
 
     public function with()
@@ -39,13 +40,19 @@ class Archive extends Composer
                     'date_closing' => 'Date de fermeture',
                 ],
             ],
+            'message' => [
+                'columns' => [
+                    'character' => 'Personnel',
+                    'date_laster' => 'Date du dernier message',
+                ],
+            ],
         ];
 
         if (!isset($config[$post_type])) {
             return [];
         }
 
-        $taxonomy = $config[$post_type]['taxonomy'];
+        $taxonomy = $config[$post_type]['taxonomy'] ?? null;
 
         // récupération des taxonomies du post courrant
         $filters = get_terms([

@@ -10,7 +10,7 @@
   }
 
   // Liste de tes CPT à afficher dans le menu
-  $cpts = ['is', 'folder'];
+  $cpts = ['is', 'folder', 'message'];
 @endphp
 
 <header class="header-main">
@@ -28,7 +28,7 @@
     </button>
   </div>
   
-  <nav class="nav-primary" aria-label="Menu Principal">
+  <nav class="nav-primary">
     <ul>
       @foreach($cpts as $cpt)
         @php
@@ -44,11 +44,6 @@
         </li>
       @endforeach
 
-      <li>
-        <a href="#">
-          Messagerie
-        </a>
-      </li>
       <li>
         <a href="#">
           Lexique

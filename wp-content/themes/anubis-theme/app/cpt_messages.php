@@ -4,7 +4,7 @@ function cpt__message()
 {
 
     $labels = array(
-        'name'                => _x('Messages', 'Post Type General Name'),
+        'name'                => _x('Messagerie', 'Post Type General Name'),
         'singular_name'       => _x('Message', 'Post Type Singular Name'),
         'menu_name'           => __('Messages'),
         'all_items'           => __('Tous les Messages'),
@@ -28,7 +28,7 @@ function cpt__message()
         'hierarchical'        => false,
         'public'              => true,
         'has_archive'         => true,
-        'rewrite'              => array('slug' => 'messages'),
+        'rewrite'              => array('slug' => 'messagerie'),
         'menu_icon'           => 'dashicons-admin-comments',
         'capability_type'     => 'message',
         'map_meta_cap'        => true,

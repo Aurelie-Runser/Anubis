@@ -1,4 +1,4 @@
-<!-- Fichier utilisée sur les listes I.S. -->
+<!-- Fichier utilisée sur les listes I.S. et Folder -->
 
 @extends('layouts.app')
 
@@ -17,7 +17,7 @@
         @foreach($columns as $meta_key => $title)
         <th scope="col" class="archive_table--head-colname">{{ $title }}</th>
         @endforeach
-        <th scope="col" class="archive_table--head-colname">Actions</th>
+        <th scope="col" class="archive_table--head-colname"><span class="sr-only">Actions</span></th>
       </tr>
     </thead>
 
@@ -31,6 +31,12 @@
 
   {{ custom_pagination($query) }}
 </div>
+
+@else
+
+<x-alert type="default">
+  Aucun {!! get_post_type_object( "folder" )->labels->singular_name !!}
+</x-alert>
 
 @endif
 

@@ -10,22 +10,23 @@
         var(--wp--preset--spacing--sm);
 
       .archive_table--head-colname {
-        padding-block: var(--wp--preset--spacing--sm);
+        padding: var(--wp--preset--spacing--sm) var(--wp--preset--spacing--xs);
         font-weight: 200;
         font-size: var(--wp--preset--font-size--lg);
         color: var(--wp--preset--color--primary);
+        text-align: start;
       }
     }
 
     .archive_table--body {
 
       .archive-item {
-        padding-inline: var(--wp--preset--spacing--md);
-
+        
         th {
-          padding-block: var(--wp--preset--spacing--xs);
+          padding: var(--wp--preset--spacing--xs);
           font-weight: 200;
           font-size: var(--wp--preset--font-size--lg);
+          text-align: start;
         }
 
         &.is_not_allow {
