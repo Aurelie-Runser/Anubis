@@ -11,6 +11,7 @@ $meta = [
     'date_rapport' => get_post_meta($post_id, '_date_rapport', true),
     'linked_folder' => get_post_meta($post_id, '_linked_folder', true),
     'rapport_author' => get_post_meta($post_id, '_rapport_author', true),
+    'galerie'       => get_post_meta($post_id, '_galerie', true),
 ];
     
 $author_id = explode('-', get_the_title());
@@ -27,7 +28,7 @@ $steps = get_post_meta($post_id, '_rapport_steps', true);
         <div class="content">
             <header>
                 <h1 class="p-name">
-                    Rapport Numéro&nbsp;:&nbsp;{!! get_the_title() !!}
+                    Rapport&nbsp;:&nbsp;{!! display_meta( get_the_title() ) !!}
                 </h1>
             </header>
 
@@ -51,5 +52,38 @@ $steps = get_post_meta($post_id, '_rapport_steps', true);
 
         </div>
 
+        <?php if ($meta['galerie']) :
+            $ids = explode(',', $meta['galerie']);
+        ?>
+            <div class="gallery">
+                <?php foreach ($ids as $media_id) : 
+                    $description = get_post_field('post_content', $media_id);
+                    $mime_type = get_post_mime_type($media_id);
+                ?>
+                    <figure>
+                        <?php 
+                        if (str_starts_with($mime_type, 'image/')) {
+                            // C'est une image
+                            echo wp_get_attachment_image(
+                                $media_id, 
+                                'medium', 
+                                false, 
+                                ['alt' => esc_attr($description)]
+                            ); 
+                        } elseif (str_starts_with($mime_type, 'video/')) {
+                            // C'est une vidéo
+                            $video_url = wp_get_attachment_url($media_id);
+                            ?>
+                            <video controls width="500">
+                                <source src="<?= esc_url($video_url) ?>" type="<?= esc_attr($mime_type) ?>">
+                                Votre navigateur ne supporte pas la vidéo.
+                            </video>
+                            <?php
+                        }
+                        ?>
+                    </figure>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
     </div>
 </article>

@@ -87,6 +87,10 @@ function show_metabox_rapport($post)
         'order' => 'ASC',
     ]);
 
+
+    $galerie = get_post_meta($post->ID, '_galerie', true);
+    $galerie_ids = $galerie ? explode(',', $galerie) : [];
+
     $steps = get_post_meta($post->ID, '_rapport_steps', true);
     $steps = is_array($steps) ? $steps : [];
 
@@ -134,6 +138,34 @@ function show_metabox_rapport($post)
             </label>
         <?php endforeach; ?>
     </div>
+
+     <!-- GALERIE -->
+    <p>
+        <label><strong>Galerie</strong></label><br>
+        <input type="hidden" name="galerie" id="galerie_input" value="<?php echo esc_attr($galerie); ?>">
+        <button type="button" class="button" id="upload_gallery_button">
+            Sélectionner des images
+        </button>
+
+    <div id="gallery_preview" style="margin-top:10px;">
+        <?php
+        foreach ($galerie_ids as $media_id) {
+            $mime_type = get_post_mime_type($media_id);
+
+            if (str_starts_with($mime_type, 'image/')) {
+                $preview = wp_get_attachment_image($media_id, 'thumbnail');
+            } elseif (str_starts_with($mime_type, 'video/')) {
+                $video_url = wp_get_attachment_url($media_id);
+                $preview = '<video src="' . esc_url($video_url) . '" height="150" controls muted></video>';
+            } else {
+                continue; // ignorer les autres types
+            }
+
+            echo '<span style="margin-right:5px; display:inline-block;">' . $preview . '</span>';
+        }
+        ?>
+    </div>
+    </p>
 
     <p>
         <strong>Etapes</strong>
@@ -202,6 +234,7 @@ function show_metabox_rapport($post)
 <?php
 }
 
+
 function save_metabox_rapport($post_id)
 {
 
@@ -227,6 +260,10 @@ function save_metabox_rapport($post_id)
 
     if (isset($_POST['linked_folder'])) {
         update_post_meta($post_id, '_linked_folder', sanitize_text_field($_POST['linked_folder']));
+    }
+
+    if (isset($_POST['galerie'])) {
+        update_post_meta($post_id, '_galerie', sanitize_text_field($_POST['galerie']));
     }
 
     if (isset($_POST['steps']) && is_array($_POST['steps'])) {

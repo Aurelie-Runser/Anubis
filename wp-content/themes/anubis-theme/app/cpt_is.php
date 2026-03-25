@@ -525,7 +525,7 @@ function is_enqueue_admin_scripts($hook)
 {
     if ($hook === 'post-new.php' || $hook === 'post.php') {
         global $post;
-        if ('is' === $post->post_type) {
+        if ('is' === $post->post_type || 'rapport' === $post->post_type) {
             wp_enqueue_media();
             wp_enqueue_script('is-metabox', get_template_directory_uri() . '/app/cpt_gallery.js', ['jquery'], null, true);
         }
