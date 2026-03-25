@@ -13,6 +13,9 @@ $meta = [
     'rapport_author' => get_post_meta($post_id, '_rapport_author', true),
 ];
 
+$author_id = explode('-', get_the_title());
+$author_id = $author_id[ count($author_id)-1 ];
+
 @endphp
 
 <a class="content-single-return" href="{{ get_permalink( $meta['linked_folder'] ) }}">Retourner au Dossier N°{!! get_post_meta($meta['linked_folder'], '_id', true) !!}</a>
@@ -28,7 +31,7 @@ $meta = [
 
             <ul class="list-short_infos">
                 <li>Jour des événements&nbsp;:&nbsp;<span>{!! display_meta(format_date_fr($meta['date_rapport'])) !!}</span></li>
-                <li>Auteur&nbsp;:&nbsp;<span>{!! display_meta($meta['rapport_author'] . ' - ' . get_the_title($meta['rapport_author'])) !!}</span></li>
+                <li>Auteur&nbsp;:&nbsp;<span>{!! display_meta( $author_id . ' - ' . get_the_title($meta['rapport_author'])) !!}</span></li>
             </ul>
 
         </div>
