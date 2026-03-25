@@ -35,7 +35,7 @@ class Archive extends Composer
             'folder' => [
                 'taxonomy' => 'folder_category',
                 'columns' => [
-                    'id' => 'Identifiant',
+                    'id' => 'Nom',
                     'date_opening' => 'Date d\'ouverture',
                     'date_closing' => 'Date de fermeture',
                 ],

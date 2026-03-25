@@ -9,6 +9,7 @@ if (!is_user_allowed_for_content($post_id)) {
 
 // Récupération des métas
 $meta = [
+    'id' => get_post_meta($post_id, '_id', true),
     'date_opening' => get_post_meta($post_id, '_date_opening', true),
     'date_closing' => get_post_meta($post_id, '_date_closing', true),
     'date_last_update' => get_post_meta($post_id, '_date_last_update', true),
@@ -86,7 +87,7 @@ if($is_admin || $can_view_logs){
         <div class="content">
             <header>
                 <h1 class="p-name">
-                    Dossier Numéro&nbsp;:&nbsp;{!! get_the_title() !!}
+                    Dossier&nbsp;:&nbsp;{!! $meta['id'] !!} - {!! get_the_title() !!}
                 </h1>
             </header>
 

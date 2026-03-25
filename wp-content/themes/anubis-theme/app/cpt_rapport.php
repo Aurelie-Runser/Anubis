@@ -69,7 +69,7 @@ add_action('add_meta_boxes', 'add_metabox_rapport');
 function show_metabox_rapport($post)
 {
 
-    $date_publish = get_post_meta($post->ID, '_date_publish', true);
+    $date_rapport = get_post_meta($post->ID, '_date_rapport', true);
 
     $linked_folder = get_post_meta($post->ID, '_linked_folder', true);
     $folder_posts = get_posts([
@@ -91,12 +91,12 @@ function show_metabox_rapport($post)
 ?>
 
     <p>
-        <label for="date_publish"><strong>Date de publication</strong></label><br>
+        <label for="date_rapport"><strong>Jour des événements</strong></label><br>
         <input
             type="date"
-            id="date_publish"
-            name="date_publish"
-            value="<?php echo esc_attr($date_publish); ?>">
+            id="date_rapport"
+            name="date_rapport"
+            value="<?php echo esc_attr($date_rapport); ?>">
     </p>
 
     
@@ -150,8 +150,8 @@ function save_metabox_rapport($post_id)
     if (!current_user_can('edit_post', $post_id)) return;
     if (get_post_type($post_id) !== 'rapport') return;
 
-    if (isset($_POST['date_publish'])) {
-        update_post_meta($post_id, '_date_publish', sanitize_text_field($_POST['date_publish']));
+    if (isset($_POST['date_rapport'])) {
+        update_post_meta($post_id, '_date_rapport', sanitize_text_field($_POST['date_rapport']));
     }
 
     if (isset($_POST['rapport_author'])) {
@@ -171,8 +171,8 @@ add_filter('wp_insert_post_data', function ($data, $postarr) {
 
         // metas
         $linked_folder = get_post_meta($postarr['ID'], '_linked_folder', true);
-        $date_publish  = get_post_meta($postarr['ID'], '_date_publish', true);
-        $date_publish  = str_replace('-', '', $date_publish);
+        $date_rapport  = get_post_meta($postarr['ID'], '_date_rapport', true);
+        $date_rapport  = str_replace('-', '', $date_rapport);
 
         $author_character_id = get_post_meta($postarr['ID'], '_rapport_author', true);
 
@@ -196,7 +196,7 @@ add_filter('wp_insert_post_data', function ($data, $postarr) {
         $title_parts = [];
 
         if ($linked_folder)      $title_parts[] = get_post_meta($linked_folder, '_id', true);
-        if ($date_publish)       $title_parts[] = $date_publish;
+        if ($date_rapport)       $title_parts[] = $date_rapport;
         if ($author_identifier)  $title_parts[] = $author_identifier;
 
         $data['post_title'] = implode('-', $title_parts);
@@ -218,7 +218,7 @@ function rapport_admin_columns($columns)
 
         if ($key === 'title') {
             $new_columns['linked_folder'] = 'Dossié associé';
-            $new_columns['date_publish'] = 'Date de publication';
+            $new_columns['date_rapport'] = 'Jour';
             $new_columns['rapport_author'] = 'Auteur';
         }
     }
@@ -247,11 +247,11 @@ function rapport_admin_column_content($column, $post_id)
         }
     }
 
-    if ($column === 'date_publish') {
+    if ($column === 'date_rapport') {
 
-        $date_publish = get_post_meta($post_id, '_date_publish', true);
+        $date_rapport = get_post_meta($post_id, '_date_rapport', true);
 
-        echo '<span>' . esc_html($date_publish) . '</span>';
+        echo '<span>' . esc_html($date_rapport) . '</span>';
     }
 
     if ($column === 'rapport_author') {

@@ -8,7 +8,7 @@ if (!is_user_allowed_for_content($post_id)) {
 
 // Récupération des métas
 $meta = [
-    'date_publish' => get_post_meta($post_id, '_date_publish', true),
+    'date_rapport' => get_post_meta($post_id, '_date_rapport', true),
     'linked_folder' => get_post_meta($post_id, '_linked_folder', true),
     'rapport_author' => get_post_meta($post_id, '_rapport_author', true),
 ];
@@ -27,7 +27,7 @@ $meta = [
             </header>
 
             <ul class="list-short_infos">
-                <li>Date de publication&nbsp;:&nbsp;<span>{!! display_meta(format_date_fr($meta['date_publish'])) !!}</span></li>
+                <li>Jour des événements&nbsp;:&nbsp;<span>{!! display_meta(format_date_fr($meta['date_rapport'])) !!}</span></li>
                 <li>Auteur&nbsp;:&nbsp;<span>{!! display_meta($meta['rapport_author'] . ' - ' . get_the_title($meta['rapport_author'])) !!}</span></li>
             </ul>
 
