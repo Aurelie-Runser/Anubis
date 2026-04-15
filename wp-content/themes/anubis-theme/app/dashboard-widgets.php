@@ -66,7 +66,15 @@ add_action('wp_dashboard_setup', function () {
             </li>
             <br/>
             <li>
-                Rôle&nbsp;:&nbsp;<strong>Directeur</strong><br/>
+                Rôle&nbsp;:&nbsp;<strong>Directeur</strong>
+                <ul style="margin-left: 20px;">
+                    <li>
+                        Identifiant&nbsp;:&nbsp;<strong>9273</strong> <br/>
+                    </li>
+                    <li>
+                        Mdp&nbsp;:&nbsp;<strong>V6qcnh8DLkxWTuu0</strong>
+                    </li>
+                </ul>
                 <span>Il est inutile de mettre du contenu accessible uniquement pour ce rôle car dès que l'utilisateur se connecte à ce compte, il aura un screamer et sera déconnecté.</span>
             </li>
         </ul>
@@ -75,7 +83,7 @@ add_action('wp_dashboard_setup', function () {
 
         <p>Les comptes ne peuvent être géré que par l'administrateur.</p>
 
-        <p>Mise à jour le 04/03/2026</p>
+        <p>Mise à jour le 15/04/2026</p>
 <?php
         }
     );
