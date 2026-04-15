@@ -1,16 +1,36 @@
-import favicon from '@images/favicon-black.png';
-        
-function setFavicon() {
-    if (!window.__isLoggedIn) return;
+import favicon_black from '@images/favicon-black.png';
+import favicon_is from '@images/favicon-is.png';
 
+function setFavicon(icon, title) {
     document.querySelectorAll("link[rel*='icon']").forEach(el => {
-        el.href = favicon + '?v=' + Date.now();
+        el.href = icon + '?v=' + Date.now();
     });
+    
+    document.title = title;
 }
 
-// DOM ready
-document.addEventListener("DOMContentLoaded", setFavicon);
+// état normal
+const defaultFavicon = favicon_black;
+const awayFavicon = favicon_is;
 
-// fallback si WP injecte après
-setTimeout(setFavicon, 500);
-setTimeout(setFavicon, 1500);
+const defaultTitle = document.title;
+const awayTitle = "...";
+
+// initial
+setFavicon(defaultFavicon, defaultTitle);
+
+// détection changement onglet
+document.addEventListener("visibilitychange", () => {
+
+    if (document.visibilityState === "hidden") {
+        setTimeout(() => {
+            setFavicon(awayFavicon, awayTitle);
+        }, 50);
+    }
+        
+    if (document.visibilityState === "visible") {
+        setTimeout(() => {
+            setFavicon(defaultFavicon, defaultTitle);
+        }, 50);
+    }
+});

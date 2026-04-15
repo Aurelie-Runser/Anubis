@@ -8,7 +8,7 @@ function showIs() {
     // durée d'apparition variable
     const visibleTime = randomRange(500, 6000);
 
-    is.style.opacity = "0.15";
+    is.style.opacity = "0.2";
 
     setTimeout(() => {
         is.style.opacity = "0";
