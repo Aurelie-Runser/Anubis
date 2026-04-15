@@ -15,4 +15,8 @@
     &.alert-warning {
         background: var(--wp--preset--color--warning);
     }
+
+    &.js-form-alert {
+        margin-top: var(--wp--preset--spacing--md);
+    }
 }

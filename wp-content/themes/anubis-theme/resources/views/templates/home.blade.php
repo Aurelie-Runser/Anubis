@@ -29,11 +29,12 @@
         <input type="email" name="email" id="email" placeholder="E-mail" required>
         <input type="tel" name="telephone" id="telephone" placeholder="Téléphone" required>
 
-        <textarea name="message" id="message" placeholder="Message" required></textarea>
+        <textarea name="message" id="message" placeholder="Message" required rows="5"></textarea>
 
         <button type="submit" class="btn">Envoyer</button>
-        
     </form>
+    
+    <x-alert type="restricted" class="js-form-alert" style="display: none">Une erreur a été rencontrée, votre message n'a pas été envoyé.</x-alert>
 </section>
 
 <footer class="alignfull home-footer">
