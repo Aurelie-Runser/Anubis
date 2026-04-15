@@ -150,18 +150,68 @@ function show_metabox_rapport($post)
     <div id="gallery_preview" style="margin-top:10px;">
         <?php
         foreach ($galerie_ids as $media_id) {
-            $mime_type = get_post_mime_type($media_id);
 
+            $mime_type = get_post_mime_type($media_id);
+            $url = wp_get_attachment_url($media_id);
+            $title = get_the_title($media_id);
+
+            echo '<span style="margin-right:10px; display:inline-block; text-align:center;">';
+
+            // 🖼 IMAGE
             if (str_starts_with($mime_type, 'image/')) {
-                $preview = wp_get_attachment_image($media_id, 'thumbnail');
+
+                echo wp_get_attachment_image($media_id, 'thumbnail');
+
+            // 🎬 VIDEO
             } elseif (str_starts_with($mime_type, 'video/')) {
-                $video_url = wp_get_attachment_url($media_id);
-                $preview = '<video src="' . esc_url($video_url) . '" height="150" controls muted></video>';
+
+                echo '<video src="' . esc_url($url) . '" height="150" controls muted style="display:block;"></video>';
+
+            // 📄 PDF
+            } elseif ($mime_type === 'application/pdf') {
+
+                $preview = wp_get_attachment_image_src($media_id, 'thumbnail');
+
+                if ($preview) {
+                    echo '<img src="' . esc_url($preview[0]) . '" style="height:120px;">';
+                } else {
+                    echo '<div style="
+                        aspect-ratio:3/4;
+                        height:150px;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        background:#f1f1f1;
+                        border:1px solid #ccc;
+                        font-size:12px;
+                    ">
+                        📄 PDF
+                    </div>';
+                }
+
+            // 📁 AUTRES FICHIERS
             } else {
-                continue; // ignorer les autres types
+
+                echo '<div style="
+                    aspect-ratio:3/4;
+                    height:150px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    background:#fafafa;
+                    border:1px solid #ddd;
+                    font-size:12px;
+                ">
+                    📁
+                </div>';
             }
 
-            echo '<span style="margin-right:5px; display:inline-block;">' . $preview . '</span>';
+            // 🏷 TITRE
+            echo '<div style="font-size:11px; max-width:100px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">'
+                . esc_html($title) .
+            '</div>';
+
+            echo '</span>';
         }
         ?>
     </div>

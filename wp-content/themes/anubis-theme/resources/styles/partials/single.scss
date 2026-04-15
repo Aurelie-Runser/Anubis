@@ -75,6 +75,74 @@
                 &:last-child{
                     margin-bottom: 0;
                 }
+
+                .pdf-preview {
+                    display: block;
+                    aspect-ratio: 3/4;
+                    background: var(--wp--preset--color--grey-light);
+                    cursor: pointer;
+                    overflow: hidden;
+                    color: var(--wp--preset--color--black);
+
+                    .pdf-box {
+                        position: relative;
+                        width: 100%;
+                        height: 100%;
+
+                        .pdf-img {
+                            z-index: 1;
+                            width: 100%;
+                            height: 100%;
+                            object-fit: contain;
+                        }
+
+                        .pdf-eye {
+                            position: absolute;
+                            z-index: 3;
+                            top: var(--wp--preset--spacing--xs);
+                            right: var(--wp--preset--spacing--xs);
+                            width: 25px;
+                            height: 25px;
+                            filter: brightness(0) saturate(100%) invert(51%) sepia(42%) saturate(5646%) hue-rotate(178deg) brightness(94%) contrast(82%);
+                            transform-origin: top right;
+                            transition: all .2s linear;
+                        }
+
+                        .pdf-text {
+                            position: absolute;
+                            z-index: 2;
+                            top: 50%;
+                            left: 50%;
+                            translate: -50% -50%;
+                            font-size: var(--wp--preset--font-size--xl);
+                            color: var(--wp--preset--color--warning);
+                            font-weight: bold;
+                            text-align: center;
+                        }
+
+                        .pdf-title {
+                            position: absolute;
+                            z-index: 5;
+                            bottom: 0;
+                            left: 0;
+                            width: 100%;
+                            background: var(--wp--preset--color--black);
+                            color: var(--wp--preset--color--white);
+                            text-align: center;
+                            padding: var(--wp--preset--spacing--xs);
+                        }
+                    }
+
+                    &:hover {
+
+                        .pdf-box {
+                            
+                            .pdf-eye {
+                                scale: 1.2;
+                            }
+                        }
+                    }
+                }
             }
         }
 

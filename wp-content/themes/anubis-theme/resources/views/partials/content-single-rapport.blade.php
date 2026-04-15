@@ -57,32 +57,51 @@ $steps = get_post_meta($post_id, '_rapport_steps', true);
         ?>
             <div class="gallery">
                 <?php foreach ($ids as $media_id) : 
-                    $description = get_post_field('post_content', $media_id);
-                    $mime_type = get_post_mime_type($media_id);
-                ?>
-                    <figure>
-                        <?php 
-                        if (str_starts_with($mime_type, 'image/')) {
-                            // C'est une image
-                            echo wp_get_attachment_image(
-                                $media_id, 
-                                'medium', 
-                                false, 
-                                ['alt' => esc_attr($description)]
-                            ); 
-                        } elseif (str_starts_with($mime_type, 'video/')) {
-                            // C'est une vidéo
-                            $video_url = wp_get_attachment_url($media_id);
-                            ?>
-                            <video controls width="500">
-                                <source src="<?= esc_url($video_url) ?>" type="<?= esc_attr($mime_type) ?>">
-                                Votre navigateur ne supporte pas la vidéo.
-                            </video>
-                            <?php
-                        }
-                        ?>
-                    </figure>
-                <?php endforeach; ?>
+    $description = get_post_field('post_content', $media_id);
+    $mime_type = get_post_mime_type($media_id);
+    $url = wp_get_attachment_url($media_id);
+?>
+    <figure>
+        <?php 
+        if (str_starts_with($mime_type, 'image/')) {
+
+            echo wp_get_attachment_image(
+                $media_id, 
+                'medium', 
+                false, 
+                ['alt' => esc_attr($description)]
+            );
+
+        } elseif (str_starts_with($mime_type, 'video/')) {
+
+            ?>
+            <video controls width="500">
+                <source src="<?= esc_url($url) ?>" type="<?= esc_attr($mime_type) ?>">
+                Votre navigateur ne supporte pas la vidéo.
+            </video>
+            <?php
+
+        } elseif ($mime_type === 'application/pdf') {
+            $url = wp_get_attachment_url($media_id);
+            $preview = wp_get_attachment_image_src($media_id, 'medium');
+            ?>
+            <a class="pdf-preview" href="<?= esc_url($url) ?>" target="_blank">
+                <div class="pdf-box">
+                    <?php if ($preview) : ?>
+                        <img class="pdf-img" src="<?= esc_url($preview[0]) ?>" alt="Preview PDF">
+                    <?php else : ?>
+                        <img class="pdf-eye" src="{{ Vite::asset('resources/images/eye.svg') }}" aria-hidden="true">
+                        <span class="pdf-text">Dossier Confidentiel</span>
+                    <?php endif; ?>
+
+                    <span class="pdf-title">{!! get_the_title($media_id) !!}</span>
+                </div>
+            </a>
+            <?php
+        }
+        ?>
+    </figure>
+<?php endforeach; ?>
             </div>
         <?php endif; ?>
     </div>
