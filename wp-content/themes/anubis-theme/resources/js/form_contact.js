@@ -3,5 +3,8 @@ const alertBox = document.querySelector(".js-form-alert");
 
 form.addEventListener("submit", function (e) {
     e.preventDefault();
-    alertBox.style.display = "block";
+
+    if( alertBox ) {
+        alertBox.style.display = "block";
+    }
 });

@@ -14,8 +14,8 @@
 @use "@styles/partials/single-message" as *;
 @use "@styles/partials/single" as *;
 
-@use "@styles/sections/eject" as *;
 @use "@styles/sections/header" as *;
 @use "@styles/sections/is-overlay" as *;
 
+@use "@styles/templates/eject" as *;
 @use "@styles/templates/home" as *;
