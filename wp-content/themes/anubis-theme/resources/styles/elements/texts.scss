@@ -24,3 +24,10 @@ span, strong {
         content: "< ";
     }
 }
+
+.link-hidden {
+    position: fixed;
+    bottom: var(--wp--preset--spacing--xs);
+    left: var(--wp--preset--spacing--xs);
+    color: transparent;
+}

@@ -54,6 +54,9 @@
 
         <p class="copywrite">Propriété d'Anubis</p>
     </div>
+
 </footer>
+
+<a class="link-hidden" href="{{ wp_login_url() }}">Me connecter</a>
 
 @endsection
