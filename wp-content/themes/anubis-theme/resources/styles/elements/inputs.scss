@@ -1,8 +1,9 @@
-input {
+input, textarea {
     border: 1px solid var(--wp--preset--color--black);
     background: var(--wp--preset--color--grey-light);
     border-radius: var(--wp--preset--spacing--xxs);
     padding: calc(var(--wp--preset--spacing--sm) - 5px) var(--wp--preset--spacing--sm);
     color: var(--wp--preset--color--black);
     font-size: var(--wp--preset--font-size--base);
+    font-family: var(--wp--preset--font-family--primary);
 }

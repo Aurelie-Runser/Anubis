@@ -32,6 +32,10 @@
     color: var(--wp--preset--color--white);
 }
 
+*:focus {
+    outline: 3px solid var(--wp--preset--color--primary);
+}
+
 body {
     background: var(--wp--preset--color--white);
 

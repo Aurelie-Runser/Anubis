@@ -1,4 +1,9 @@
 // largeur du contenu = theme.json > layout/contentSize
+
+.home .main {
+  padding-block: 0 !important;
+}
+
 .main {
   padding-block: var(--wp--preset--spacing--md) var(--wp--preset--spacing--xl);
   

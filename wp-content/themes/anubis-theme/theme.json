@@ -3,7 +3,7 @@
   "version": 3,
   "settings": {
     "layout": {
-      "contentSize": "1280px",
+      "contentSize": "1000px",
       "wideSize": "1440px"
     },
     "background": {
@@ -54,6 +54,12 @@
         }
       ]
     },
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
     "spacing": {
       "margin": true,
       "padding": true,
@@ -99,7 +105,7 @@
     },
     "typography": {
       "defaultFontSizes": false,
-      "customFontSize": false,
+      "customFontSize": true,
       "fontFamilies": [
         {
           "name": "Primary",
@@ -152,9 +158,19 @@
       ]
     },
     "blocks": {
+      "core/paragraph": {
+        "typography": {
+          "fontSize": true
+        }
+      },
+      "core/heading": {
+        "typography": {
+          "fontSize": true
+        }
+      },
       "core/image": {
         "lightbox": {
-          "enabled": true
+          "enabled": false
         }
       }
     }
@@ -187,7 +203,6 @@
       },
       "h2": {
         "typography": {
-          "fontFamily": "var:preset|font-family|title",
           "fontSize": "var:preset|font-size|lg"
         },
         "spacing": {
@@ -199,12 +214,11 @@
       },
       "h3": {
         "typography": {
-          "fontFamily": "var:preset|font-family|title",
           "fontSize": "var:preset|font-size|lg"
         },
         "spacing": {
           "margin": {
-			"top": "var:preset|spacing|md",
+			      "top": "var:preset|spacing|md",
             "bottom": "var:preset|spacing|sm"
           }
         }

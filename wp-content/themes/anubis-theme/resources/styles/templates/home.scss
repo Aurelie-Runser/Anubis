@@ -1,0 +1,40 @@
+.home {
+
+    .home-header {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        left: 50%;
+        translate: -50% 0;
+        width: 100%;
+
+        .contentwide {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--wp--preset--spacing--md);
+    
+            img {
+                width: 50px;
+            }
+        }
+    }
+
+    #contact {
+        margin-block: var(--wp--preset--spacing--xl);
+
+        .contact-form {
+            display: grid;
+            grid-template-columns: 50% 50%;
+            gap: var(--wp--preset--spacing--sm) var(--wp--preset--spacing--md);
+
+            textarea, button {
+                grid-column: 1 / -1;
+            }
+
+            button {
+                margin-inline: auto;
+            }
+        }
+    }
+}
