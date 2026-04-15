@@ -5,9 +5,11 @@
 @extends('layouts.app')
 @section('content')
 
-<header class="home-header">
+<header class="alignfull home-header">
     <div class="contentwide">
-        <img src="{{ Vite::asset('resources/images/logo-black.png') }}" alt="logo d'Anubis">
+        <a href="#" aria-label="Accueil">
+            <img src="{{ Vite::asset('resources/images/logo-black.png') }}" alt="logo d'Anubis">
+        </a>
 
         <a href="#contact" class="btn">
             Nous contacter
@@ -34,9 +36,22 @@
     </form>
 </section>
 
-<footer>
-    <div>
+<footer class="alignfull home-footer">
+    <div class="contentwide">
+        <a href="#" aria-label="Accueil">
+            <img src="{{ Vite::asset('resources/images/logo-black.png') }}" alt="logo d'Anubis">
+        </a>
 
+        <ul>
+            <li>
+                <a href="#contact">Contact</a>
+            </li>
+            <li>
+                <a href="#">Mention légales</a>
+            </li>
+        </ul>
+
+        <p class="copywrite">Propriété d'Anubis</p>
     </div>
 </footer>
 

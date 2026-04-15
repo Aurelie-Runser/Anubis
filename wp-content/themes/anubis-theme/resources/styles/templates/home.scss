@@ -37,4 +37,38 @@
             }
         }
     }
+
+    .home-footer {
+        background: var(--wp--preset--color--grey-light);
+        padding-block: var(--wp--preset--spacing--md) var(--wp--preset--spacing--sm);
+
+        .contentwide {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--wp--preset--spacing--md);
+
+            img {
+                width: 100px;
+            }
+
+            ul {
+                display: flex;
+                flex-direction: column;
+                
+                li {
+                    display: list-item;
+                    list-style: inside;
+                    color: var(--wp--preset--color--black);
+                }
+            }
+
+            .copywrite {
+                flex: none;
+                width: 100%;
+                text-align: center;
+                font-size: var(--wp--preset--font-size--sm);
+                margin-bottom: 0;
+            }
+        }
+    }
 }
