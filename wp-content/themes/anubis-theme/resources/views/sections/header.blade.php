@@ -59,12 +59,6 @@
       @endforeach
 
       <li>
-        <a href="#">
-          Lexique
-        </a>
-      </li>
-
-      <li>
         <a href="{{ home_url('/profil') }}" class="{{ $is_profil_template ? 'active' : '' }}">
           Profil
         </a>
