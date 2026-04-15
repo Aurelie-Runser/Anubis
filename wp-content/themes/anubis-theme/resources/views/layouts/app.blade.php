@@ -17,7 +17,7 @@
         {{ __('Skip to content', 'sage') }}
       </a>
 
-      @if ( !is_page() || ( is_page() && !is_page_template('default') ) )
+      @if ( !is_page() || ( is_page() && (is_page_template('templates/profil.blade.php') ) ) )
         @include('sections.header')
       @endif
 
@@ -25,13 +25,6 @@
         @yield('content')
       </main>
 
-      <!-- @hasSection('sidebar')
-        <aside class="sidebar">
-          @yield('sidebar')
-        </aside>
-      @endif -->
-
-      <!-- @include('sections.footer') -->
     </div>
 
     @php(do_action('get_footer'))

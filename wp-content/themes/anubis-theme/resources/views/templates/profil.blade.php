@@ -6,10 +6,10 @@
     $current_user_id = get_current_user_id();
 
     $character_query = new WP_Query([
-    'post_type'      => 'character',
-    'meta_key'       => '_linked_user',
-    'meta_value'     => $current_user_id,
-    'posts_per_page' => 1,
+        'post_type'      => 'character',
+        'meta_key'       => '_linked_user',
+        'meta_value'     => $current_user_id,
+        'posts_per_page' => 1,
     ]);
 
     $character = $character_query->have_posts() ? $character_query->posts[0] : null;
