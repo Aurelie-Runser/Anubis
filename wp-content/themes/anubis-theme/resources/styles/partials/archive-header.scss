@@ -6,6 +6,7 @@
         padding-inline: var(--wp--preset--spacing--sm);
         display: flex;
         column-gap: var(--wp--preset--spacing--md);
+        overflow-x: auto;
 
         a {
             display: block;
