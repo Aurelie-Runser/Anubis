@@ -58,6 +58,8 @@ class Archive extends Composer
         $filters = get_terms([
             'taxonomy' => $taxonomy,
             'hide_empty' => true,
+            'orderby' => 'name',
+            'order' => $taxonomy == 'folder_category' ? 'DESC' : 'ASC',
         ]);
 
         // récupération du 1er taxo
