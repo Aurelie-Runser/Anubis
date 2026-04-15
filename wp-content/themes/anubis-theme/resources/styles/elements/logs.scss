@@ -1,7 +1,7 @@
 .logs{
     height: 300px;
     padding: var(--wp--preset--spacing--sm);
-    background: var(--wp--preset--color--black);
+    background: black;
     overflow-y: auto;
     scrollbar-color: var(--wp--preset--color--good) var(--wp--preset--color--black);
     
@@ -10,7 +10,7 @@
             list-style: none;
             margin-bottom: var(--wp--preset--spacing--xs);
             font-family: var(--wp--preset--font-family--console);
-            color: var(--wp--preset--color--white);
+            color: #EBEBEB;
             text-transform: uppercase;
 
             span {

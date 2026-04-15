@@ -16,3 +16,16 @@
 
 @use "@styles/sections/eject" as *;
 @use "@styles/sections/header" as *;
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --wp--preset--color--white: #242424;
+    --wp--preset--color--black: #EBEBEB;
+    --wp--preset--color--grey-light: #303030;
+
+    .btn-icon img {
+        filter: brightness(0) saturate(100%) invert(9%) sepia(12%) saturate(11%) hue-rotate(315deg) brightness(103%) contrast(88%);
+    }
+  }
+}
