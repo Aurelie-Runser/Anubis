@@ -51,6 +51,11 @@
           "color": "#DDDDDD",
           "name": "Grey Light",
           "slug": "grey-light"
+        },
+        {
+          "color": "#121212",
+          "name": "Black Profond",
+          "slug": "blacker"
         }
       ]
     },

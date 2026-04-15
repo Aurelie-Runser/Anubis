@@ -32,12 +32,23 @@
     <ul>
       @foreach($cpts as $cpt)
         @php
-          $is_active = is_post_type_archive($cpt) 
-          || is_singular($cpt) 
-          || (
-              is_tax() 
-              && get_post_type() === $cpt
-          );
+          $current_post_type = get_post_type();
+
+          // mapping enfant → parent
+          $cpt_parents = [
+            'rapport' => 'folder',
+          ];
+
+          $is_active = 
+            is_post_type_archive($cpt) 
+            || is_singular($cpt)
+            || (is_tax() && get_post_type() === $cpt)
+
+            || (
+              isset($cpt_parents[$current_post_type]) 
+              && $cpt_parents[$current_post_type] === $cpt
+            );
+
           $post_type_obj = get_post_type_object($cpt);
         @endphp
         <li>
