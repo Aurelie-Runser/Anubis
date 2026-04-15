@@ -4,6 +4,7 @@ import.meta.glob([
 ]);
 
 import '@scripts/auto_scroll_zone'
+import '@scripts/favicon_update'
 import '@scripts/input_fake'
 import '@scripts/is_overlay'
 import '@scripts/menu'
