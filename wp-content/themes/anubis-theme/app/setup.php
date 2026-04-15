@@ -24,6 +24,20 @@ add_filter('block_editor_settings_all', function ($settings) {
 });
 
 /**
+ * Injecte nos styles sur le wp-login
+ *
+ * @return array
+ */
+add_action('login_enqueue_scripts', function () {
+    // On récupère le chemin du fichier généré par Vite
+    $style = Vite::asset('resources/styles/login.scss');
+
+    // On l’enregistre et on l’injecte dans la page de connexion
+    wp_enqueue_style('custom-login-style', $style, [], null);
+});
+
+
+/**
  * Inject scripts into the block editor.
  *
  * @return void

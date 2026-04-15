@@ -11,6 +11,7 @@ export default defineConfig({
         'resources/js/app.js',
         'resources/styles/editor.scss',
         'resources/js/editor.js',
+        'resources/styles/login.scss',
       ],
       refresh: true,
     }),

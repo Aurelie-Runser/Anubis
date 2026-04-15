@@ -1,0 +1,179 @@
+@use '@styles/elements/inputs' as * ;
+
+//Mettez les couleurs ici
+$color-primary: #188FD9;
+
+:root {
+    --color-white: #EBEBEB;
+    --color-black: #242424;
+    --color-grey-light: #DDDDDD;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-white: #242424;
+    --color-black: #EBEBEB;
+    --color-grey-light: #303030;
+
+    .wp-login-logo {
+        filter: invert(1);
+    }
+
+    #loginform {
+        background: #121212 !important;
+    }
+  }
+}
+
+//Puis appliquez les sur vos éléments
+$body-bg: var(--color-white);
+$logo-url: url("../images/logo-black.png");
+$logo-size-height: 150px;
+
+$link-color: var(--color-white);
+$link-color-hover: $color-primary;
+$link-color-active: $color-primary;
+$link-color-visited: var(--color-black);
+
+$button-color: var(--color-black);
+$button-color-hover: $color-primary;
+$button-color-active: $color-primary;
+
+$focus-box-color: $color-primary;
+
+$input-border-focus: $color-primary;
+
+//Ainsi le css ci-dessous ne sera plus à éditer
+
+/* Fond */
+body {
+    background: $body-bg;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+#loginform {
+    border: none;
+
+    #user_login, #user_pass {
+        background: var(--color-grey-light) !important;
+        border-radius: 5px !important;
+        padding: 15px 20px !important;
+        font-size: 1rem !important;
+        color: var(--color-black) !important;
+    }
+
+    .button.button-secondary.wp-hide-pw.hide-if-no-js {
+        height: 53px;
+    }
+}
+
+/* Logo */
+#login h1 a,
+.login h1 a {
+    display: block;
+    width: 100%;
+    height: $logo-size-height;
+    background-image: $logo-url;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+
+/* Bouton */
+.wp-core-ui .button.button-primary {
+    background: $button-color;
+    border-color: $button-color;
+    color: var(--color-white) !important;
+    border-radius: 5px;
+    text-transform: uppercase;
+
+    &:hover {
+        background: $button-color-hover;
+        border-color: $button-color-hover;
+    }
+
+    &:active {
+        background: $button-color-active;
+        border-color: $button-color-active;
+    }
+}
+
+/* Bouton secondaire */
+.wp-core-ui .button {
+    color: $button-color;
+    border-color: $button-color;
+
+    &:hover {
+        color: $button-color-hover;
+        border-color: $button-color-hover;
+    }
+
+    &:active {
+        color: $button-color-active;
+        border-color: $button-color-active;
+    }
+}
+
+/* Liens */
+.login #backtoblog a,
+.login #nav a,
+.privacy-policy-page-link a,
+a {
+    color: $link-color;
+
+    &:hover {
+        color: $link-color-hover;
+    }
+
+    &:active {
+        color: $link-color-active;
+    }
+
+    &:visited {
+        color: $link-color-visited;
+    }
+}
+
+/* Inputs */
+
+input,
+select {
+    &:focus {
+        border-color: $input-border-focus !important;
+    }
+}
+
+// Alerts
+
+.login {
+
+    .notice {
+        padding: 10px;
+        background: $color-primary;
+        font-weight: 400;
+        color: white;
+        border: none;
+        
+        &.notice-error {
+            background: #D10D0D;
+        }
+        
+        &.notice-success {
+            background: #088104;
+        }
+        
+        &.notice-warning {
+            background: #D7BA00;
+        }
+    }
+}
+
+
+#nav, #backtoblog, .language-switcher {
+    display: none !important;
+}
