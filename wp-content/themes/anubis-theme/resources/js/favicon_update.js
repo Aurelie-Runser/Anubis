@@ -27,7 +27,7 @@ if (isLoggedIn) {
 // détection changement onglet
 document.addEventListener("visibilitychange", () => {
 
-    if (!isLoggedIn) return; // ⛔ ne rien faire si non connecté
+    if (!isLoggedIn) return; // ne rien faire si non connecté
 
     if (document.visibilityState === "hidden") {
         setTimeout(() => {

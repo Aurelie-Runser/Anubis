@@ -25,8 +25,12 @@
 
         .contact-form {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: var(--wp--preset--spacing--sm) var(--wp--preset--spacing--md);
+            
+            @media screen and (min-width: 620px) {
+                grid-template-columns: 1fr 1fr;
+            }
 
             textarea, button {
                 grid-column: 1 / -1;

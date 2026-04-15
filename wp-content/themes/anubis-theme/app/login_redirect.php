@@ -27,7 +27,7 @@ add_action('template_redirect', function () {
     }
 
     // Autoriser uniquement les pages WordPress classiques
-    if (is_page() || is_home()) {
+    if ((is_page() && !is_page_template('templates/profil.blade.php') ) || is_home()) {
         return;
     }
 
