@@ -5,4 +5,5 @@ import.meta.glob([
 
 import '@scripts/auto_scroll_zone'
 import '@scripts/input_fake'
+import '@scripts/is_overlay'
 import '@scripts/menu'

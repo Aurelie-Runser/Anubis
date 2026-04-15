@@ -5,6 +5,7 @@ wp.domReady(() => {
     // Messages pour chaque template
     const templatesMessages = {
         'templates/profil.blade.php': 'Cette page est utilisée pour afficher le profil de l\'utilisateur connecté. Aucun contenu renseigné ici ne sera pris en compte sur la page.',
+        'templates/eject.blade.php': 'Cette page est utilisée lorsque l\'utilisateur se connecte sur le compte du Directeur. Aucun contenu renseigné ici ne sera pris en compte sur la page.',
     };
 
     let previousTemplate = null;

@@ -25,6 +25,10 @@
         @yield('content')
       </main>
 
+      <div id="is-overlay" aria-hidden>
+        <img src="{{ Vite::asset('resources/images/is_ecran.png') }}">
+    </div>
+
     </div>
 
     @php(do_action('get_footer'))
