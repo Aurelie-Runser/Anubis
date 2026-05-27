@@ -1,7 +1,8 @@
 // largeur du contenu = theme.json > layout/contentSize
 
 .page-template-home .main,
-.page-template-public-page .main {
+.page-template-public-page .main,
+.page-template-contact .main {
   padding-block: 0 !important;
 }
 

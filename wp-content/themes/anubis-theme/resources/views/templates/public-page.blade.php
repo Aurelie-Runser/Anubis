@@ -11,7 +11,7 @@
             <img src="{{ Vite::asset('resources/images/logo-black.png') }}" alt="logo d'Anubis">
         </a>
 
-        <a href="{{ home_url('/#contact') }}" class="btn">
+        <a href="{{ home_url('/contact') }}" class="btn">
             Nous contacter
         </a>
     </div>
@@ -27,7 +27,7 @@
 
         <ul>
             <li>
-                <a href="{{ home_url('/#contact') }}">Contact</a>
+                <a href="{{ home_url('/contact') }}">Contact</a>
             </li>
             <li>
                 <a href="{{ home_url('/mention-legales') }}">Mention légales</a>
