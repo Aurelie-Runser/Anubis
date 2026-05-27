@@ -139,7 +139,7 @@ function show_metabox_is($post)
         </label><br>
         <label>
             <input type="radio" name="etat" value="under_control" <?php checked($etat, 'under_control'); ?>>
-            Sous contol
+            Sous control
         </label><br>
         <label>
             <input type="radio" name="etat" value="liberte" <?php checked($etat, 'liberte'); ?>>

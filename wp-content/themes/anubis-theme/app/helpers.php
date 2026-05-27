@@ -16,7 +16,7 @@ function display_meta($value) {
 function is_etat_label($etat) {
     $labels = [
         'capture'       => 'Capturé',
-        'under_control' => 'Sous contol',
+        'under_control' => 'Sous control',
         'liberte'       => 'En liberté',
         'echappe'       => 'Échappé',
     ];
