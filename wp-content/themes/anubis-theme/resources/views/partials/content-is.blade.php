@@ -16,21 +16,21 @@ $classes = $is_allowed ? 'archive-item' : 'archive-item is_not_allow';
 
 <tr @php(post_class($classes))>
   <th scope="row">
-    {!! $meta['id'] !!}
+    {!! $is_allowed ? $meta['id'] : 'Restricted' !!}
   </th>
 
   <th>
-    {!! $meta['name'] !!}
+    {!! $is_allowed ? $meta['name'] : 'Restricted' !!}
   </th>
 
   <th>
     <time datetime="{{ $meta['date_discover'] }}">
-      {{ format_date_fr( $meta['date_discover'] ) }}
+      {{ $is_allowed ? format_date_fr( $meta['date_discover'] ) : 'Restricted' }}
     </time>
   </th>
 
   <th>
-    {!! is_etat_label($meta['etat']) ?? $meta['etat'] !!}
+    {!! $is_allowed ? is_etat_label($meta['etat']) ?? $meta['etat'] : 'Restricted' !!}
   </th>
 
   <th>

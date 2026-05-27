@@ -15,18 +15,18 @@ $classes = $is_allowed ? 'archive-item' : 'archive-item is_not_allow';
 
 <tr @php(post_class($classes))>
   <th>
-    {!! $meta['id'] !!}
+    {!!$is_allowed ? $meta['id'] : 'Restricted' !!}
   </th>
 
   <th>
     <time class="dt-published" datetime="{{ $meta['date_opening'] }}">
-      {{ format_date_fr( $meta['date_opening'] ) }}
+      {{ $is_allowed ? format_date_fr( $meta['date_opening'] ) : 'Restricted' }}
     </time>
   </th>
 
   <th>
     <time class="dt-published" datetime="{{ $meta['date_closing'] }}">
-      {{ format_date_fr( $meta['date_closing'] ) }}
+      {{ $is_allowed ? format_date_fr( $meta['date_closing'] ) : 'Restricted' }}
     </time>
   </th>
 
